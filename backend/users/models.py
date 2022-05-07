@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
+from loan.models import UserData
 
 
 # Create your models here.
@@ -33,6 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = False)
     is_staff = models.BooleanField(default = False)
+    profile_photo = models.ImageField(upload_to='uploads/profile_photos/', blank=True)
+    user_data = models.ForeignKey(UserData, null=True, blank=True, on_delete=models.PROTECT, related_name='user_data')
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     objects = UserManager()
