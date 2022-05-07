@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from "react";
 import { Helmet } from "react-helmet";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("");
@@ -49,12 +50,17 @@ const Register = () => {
                 }}
             >
                 <Container maxWidth="sm">
-                    <Button
-                        component="a"
-                        startIcon={<ArrowBackIcon fontSize="small" />}
+                    <NavLink
+                        to="/"
+                        style={{ textDecoration: 'none' }}
                     >
-                        Dashboard
-                    </Button>
+                        <Button
+                            component="a"
+                            startIcon={<ArrowBackIcon fontSize="small" />}
+                        >
+                            Dashboard
+                        </Button>
+                    </NavLink>
                     <form onSubmit={handleSubmit}>
                         <Box sx={{ my: 3 }}>
                             <Typography
@@ -137,13 +143,13 @@ const Register = () => {
                             >
                                 I have read the
                                 {' '}
-                                <Link
-                                    color="primary"
-                                    underline="always"
-                                    variant="subtitle2"
+                                <NavLink
+                                    to="/terms"
                                 >
-                                    Terms and Conditions
-                                </Link>
+                                    <Link>
+                                        Terms and Conditions
+                                    </Link>
+                                </NavLink>
                             </Typography>
                         </Box>
                         <Box sx={{ py: 2 }}>
@@ -163,12 +169,13 @@ const Register = () => {
                         >
                             Have an account?
                             {' '}
-                            <Link
-                                variant="subtitle2"
-                                underline="hover"
+                            <NavLink
+                                to="/login"
                             >
-                                Sign In
-                            </Link>
+                                <Link>
+                                    Sign In
+                                </Link>
+                            </NavLink>
                         </Typography>
                     </form>
                 </Container>

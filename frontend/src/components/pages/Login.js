@@ -1,13 +1,15 @@
-import { useState } from "react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
     Container,
+    Link,
     TextField,
     Typography
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useState } from "react";
 import { Helmet } from "react-helmet";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -41,12 +43,17 @@ const Login = () => {
                 }}
             >
                 <Container maxWidth="sm">
-                    <Button
-                        component="a"
-                        startIcon={<ArrowBackIcon fontSize="small" />}
+                    <NavLink
+                        to="/"
+                        style={{ textDecoration: 'none' }}
                     >
-                        Dashboard
-                    </Button>
+                        <Button
+                            component="a"
+                            startIcon={<ArrowBackIcon fontSize="small" />}
+                        >
+                            Dashboard
+                        </Button>
+                    </NavLink>
                     <form onSubmit={handleSubmit}>
                         <Box sx={{ my: 3 }}>
                             <Typography
@@ -87,14 +94,25 @@ const Login = () => {
                                 Sign In
                             </Button>
                         </Box>
-                        <Typography
-                            color="textSecondary"
-                            variant="body2"
+                        <NavLink
+                            to="/register"
+                            style={{ textDecoration: 'none' }}
                         >
-                            Don&apos;t have an account?
-                            {' '}
-                            Sign Up
-                        </Typography>
+                            <Typography
+                                color="textSecondary"
+                                variant="body2"
+                            >
+                                Don&apos;t have an account?
+                                {' '}
+                                <NavLink
+                                    to="/register"
+                                >
+                                    <Link>
+                                        Sign Up
+                                    </Link>
+                                </NavLink>
+                            </Typography>
+                        </NavLink>
                     </form>
                 </Container>
             </Box>

@@ -1,6 +1,7 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 const NotFound = () => (
     <>
@@ -41,14 +42,19 @@ const NotFound = () => (
                         You either tried some shady route or you came here by mistake.
                         Whichever it is, try using the navigation
                     </Typography>
-                    <Button
-                        component="a"
-                        startIcon={(<ArrowBackIcon fontSize="small" />)}
-                        sx={{ mt: 3 }}
-                        variant="contained"
+                    <Link
+                        to="/"
+                        style={{ textDecoration: 'none' }}
                     >
-                        Go back to dashboard
-                    </Button>
+                        <Button
+                            component="a"
+                            startIcon={(<ArrowBackIcon fontSize="small" />)}
+                            sx={{ mt: 3 }}
+                            variant="contained"
+                        >
+                            Go back to dashboard
+                        </Button>
+                    </Link>
                 </Box>
             </Container>
         </Box>
