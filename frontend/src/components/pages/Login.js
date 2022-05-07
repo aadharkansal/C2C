@@ -7,6 +7,7 @@ import {
     Typography
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Helmet } from "react-helmet";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -27,7 +28,9 @@ const Login = () => {
 
     return (
         <>
-            <title>Login</title>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <Box
                 component="main"
                 sx={{

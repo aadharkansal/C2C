@@ -1,4 +1,4 @@
-import { useState } from "react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
@@ -8,7 +8,8 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("");
@@ -33,9 +34,11 @@ const Register = () => {
 
     return (
         <>
-            <title>
-                Register
-            </title>
+            <Helmet>
+                <title>
+                    Register
+                </title>
+            </Helmet>
             <Box
                 component="main"
                 sx={{
