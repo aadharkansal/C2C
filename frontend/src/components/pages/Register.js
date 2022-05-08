@@ -2,35 +2,74 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
-    Checkbox,
     Container,
     Link,
-    TextField,
+    Paper,
+    Step,
+    StepLabel,
+    Stepper,
     Typography
 } from '@mui/material';
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
+import UploadDocument from '../signup/UploadDocument';
+import UserDetails from '../signup/UserDetails';
+import NotFound from './NotFound';
+
+const steps = ['User Details', 'Upload Documents'];
 
 const Register = () => {
+    const [activeStep, setActiveStep] = useState(0);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [checked, setChecked] = useState(false);
+    const [ctc, setCtc] = useState(0);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (password != confirmPassword) {
-            alert("password and confirm password do not match");
+    const getStepContent = (step) => {
+        switch (step) {
+            case 0:
+                return <UserDetails
+                    firstName={firstName}
+                    setFirstName={setFirstName}
+                    lastName={lastName}
+                    setLastName={setLastName}
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
+                    confirmPassword={confirmPassword}
+                    setConfirmPassword={setConfirmPassword}
+                    setActiveStep={setActiveStep}
+                />
+            case 1:
+                return <UploadDocument
+                    checked={checked}
+                    setChecked={setChecked}
+                    setActiveStep={setActiveStep}
+                    ctc={ctc}
+                    setCtc={setCtc}
+                />
+            default:
+                return <NotFound />
         }
-        else if (checked !== true) {
-            alert("Please accept terms and conditions");
+    }
+
+    const handleNext = () => {
+        if (activeStep == 0) {
+            setActiveStep(1);
         }
         else {
-            alert(`First Name: ${firstName}\nLast Name: ${lastName}\nemail: ${email}\nPassword: ${password}`);
+            if (checked !== true) alert("Please accept terms and conditions");
+            else alert(`First Name: ${firstName}\nLast Name: ${lastName}\nemail: ${email}\nPassword: ${password}`);
         }
+    };
+
+    const handleBack = () => {
+        setActiveStep(activeStep - 1);
     };
 
     return (
@@ -49,7 +88,7 @@ const Register = () => {
                     minHeight: '100%'
                 }}
             >
-                <Container maxWidth="sm">
+                <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                     <NavLink
                         to="/"
                         style={{ textDecoration: 'none' }}
@@ -61,108 +100,13 @@ const Register = () => {
                             Dashboard
                         </Button>
                     </NavLink>
-                    <form onSubmit={handleSubmit}>
-                        <Box sx={{ my: 3 }}>
-                            <Typography
-                                color="textPrimary"
-                                variant="h4"
-                            >
-                                Create a new account
-                            </Typography>
-                            <Typography
-                                color="textSecondary"
-                                gutterBottom
-                                variant="body2"
-                            >
-                                Use your email to create a new account
-                            </Typography>
-                        </Box>
-                        <TextField
-                            fullWidth
-                            label="First Name"
-                            margin="normal"
-                            name="firstName"
-                            onChange={(e) => setFirstName(e.target.value)}
-                            value={firstName}
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Last Name"
-                            margin="normal"
-                            name="lastName"
-                            onChange={(e) => setLastName(e.target.value)}
-                            value={lastName}
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Email Address"
-                            margin="normal"
-                            name="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            type="email"
-                            value={email}
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Password"
-                            margin="normal"
-                            name="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            value={password}
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Confirm Password"
-                            margin="normal"
-                            name="confirm password"
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            type="password"
-                            value={confirmPassword}
-                            variant="outlined"
-                        />
-                        <Box
-                            sx={{
-                                alignItems: 'center',
-                                display: 'flex',
-                                ml: -1
-                            }}
+                    <Box sx={{ my: 3 }}>
+                        <Typography
+                            color="textPrimary"
+                            variant="h4"
                         >
-                            <Checkbox
-                                checked={checked}
-                                name="policy"
-                                onChange={() => setChecked(!checked)}
-                            />
-                            <Typography
-                                color="textSecondary"
-                                variant="body2"
-                            >
-                                I have read the
-                                {' '}
-                                <NavLink
-                                    to="/terms"
-                                >
-                                    <Link>
-                                        Terms and Conditions
-                                    </Link>
-                                </NavLink>
-                            </Typography>
-                        </Box>
-                        <Box sx={{ py: 2 }}>
-                            <Button
-                                color="primary"
-                                fullWidth
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                            >
-                                Sign Up Now
-                            </Button>
-                        </Box>
+                            Create a new account
+                        </Typography>
                         <Typography
                             color="textSecondary"
                             variant="body2"
@@ -177,7 +121,17 @@ const Register = () => {
                                 </Link>
                             </NavLink>
                         </Typography>
-                    </form>
+                    </Box>
+                    <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        {getStepContent(activeStep)}
+                    </Paper>
                 </Container>
             </Box>
         </>

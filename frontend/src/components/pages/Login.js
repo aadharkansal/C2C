@@ -4,6 +4,7 @@ import {
     Button,
     Container,
     Link,
+    Paper,
     TextField,
     Typography
 } from '@mui/material';
@@ -54,66 +55,69 @@ const Login = () => {
                             Dashboard
                         </Button>
                     </NavLink>
-                    <form onSubmit={handleSubmit}>
-                        <Box sx={{ my: 3 }}>
-                            <Typography
-                                color="textPrimary"
-                                variant="h4"
-                            >
-                                Sign in
-                            </Typography>
-                        </Box>
-                        <TextField
-                            fullWidth
-                            label="Email Address"
-                            margin="normal"
-                            name="email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            type="email"
-                            variant="outlined"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Password"
-                            margin="normal"
-                            name="password"
-                            value={password}
-                            onChange={handlePasswordChange}
-                            type="password"
-                            variant="outlined"
-                        />
-                        <Box sx={{ py: 2 }}>
-                            <Button
-                                color="primary"
-                                ful
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                            >
-                                Sign In
-                            </Button>
-                        </Box>
-                        <NavLink
-                            to="/register"
-                            style={{ textDecoration: 'none' }}
-                        >
-                            <Typography
-                                color="textSecondary"
-                                variant="body2"
-                            >
-                                Don&apos;t have an account?
-                                {' '}
-                                <NavLink
-                                    to="/register"
+                    <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                        <form onSubmit={handleSubmit}>
+                            <Box sx={{ my: 3 }}>
+                                <Typography
+                                    color="textPrimary"
+                                    variant="h4"
                                 >
-                                    <Link>
-                                        Sign Up
-                                    </Link>
-                                </NavLink>
-                            </Typography>
-                        </NavLink>
-                    </form>
+                                    Sign in
+                                </Typography>
+                            </Box>
+                            <TextField
+                                fullWidth
+                                label="Email Address"
+                                margin="normal"
+                                name="email"
+                                value={email}
+                                onChange={handleEmailChange}
+                                type="email"
+                                variant="outlined"
+                            />
+                            <TextField
+                                fullWidth
+                                label="Password"
+                                margin="normal"
+                                name="password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                type="password"
+                                variant="outlined"
+                            />
+                            <Box sx={{ py: 2 }}>
+                                <Button
+                                    color="primary"
+                                    ful
+                                    size="large"
+                                    type="submit"
+                                    variant="contained"
+                                >
+                                    Sign In
+                                </Button>
+                            </Box>
+                            <NavLink
+                                to="/register"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <Typography
+                                    color="textSecondary"
+                                    variant="body2"
+                                >
+                                    Don&apos;t have an account?
+                                    {' '}
+                                    <NavLink
+                                        to="/register"
+                                    >
+                                        <Link>
+                                            Sign Up
+                                        </Link>
+                                    </NavLink>
+                                </Typography>
+                            </NavLink>
+                        </form>
+                    </Paper>
+
                 </Container>
             </Box>
         </>
