@@ -2,9 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
-    Container,
-    Link,
-    Paper,
+    Container, Paper,
     TextField,
     Typography
 } from '@mui/material';
@@ -89,7 +87,6 @@ const Login = () => {
                             <Box sx={{ py: 2 }}>
                                 <Button
                                     color="primary"
-                                    ful
                                     size="large"
                                     type="submit"
                                     variant="contained"
@@ -110,9 +107,7 @@ const Login = () => {
                                     <NavLink
                                         to="/register"
                                     >
-                                        <Link>
-                                            Sign Up
-                                        </Link>
+                                        Sign Up
                                     </NavLink>
                                 </Typography>
                             </NavLink>
