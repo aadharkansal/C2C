@@ -12,6 +12,7 @@ class UserManager(BaseUserManager):
             raise TypeError("Email not entered.")
         user_obj = self.model(username=username, first_name=first_name, last_name=last_name, email=email)
         user_obj.set_password(password)
+        user_obj.is_active = True
         user_obj.save(using=self._db)
         return user_obj
 
