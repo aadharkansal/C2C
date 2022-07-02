@@ -9,7 +9,7 @@ from .models import User
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField(
-        required=True, allow_blank=False, max_length=68, min_length=6, write_only=True
+        required=True, allow_blank=False, max_length=68, min_length=2, write_only=True
     )
 
     class Meta:
@@ -19,6 +19,7 @@ class LoginSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         email = attrs.get("email", "")
         password = attrs.get("password", "")
+        print(email, password)
         user = auth.authenticate(email=email, password=password)
         if not user:
             raise AuthenticationFailed('Invalid credentials, try again')
