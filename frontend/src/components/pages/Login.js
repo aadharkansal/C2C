@@ -27,6 +27,7 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         alert(`username: ${email}\npassword: ${password}`);
+
     };
 
     return (
