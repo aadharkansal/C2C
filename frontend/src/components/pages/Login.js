@@ -2,9 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
-    Container,
-    Link,
-    Paper,
+    Container, Paper,
     TextField,
     Typography
 } from '@mui/material';
@@ -27,6 +25,7 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         alert(`username: ${email}\npassword: ${password}`);
+
     };
 
     return (
@@ -49,7 +48,7 @@ const Login = () => {
                         style={{ textDecoration: 'none' }}
                     >
                         <Button
-                            component="a"
+                            component="p"
                             startIcon={<ArrowBackIcon fontSize="small" />}
                         >
                             Dashboard
@@ -88,7 +87,6 @@ const Login = () => {
                             <Box sx={{ py: 2 }}>
                                 <Button
                                     color="primary"
-                                    ful
                                     size="large"
                                     type="submit"
                                     variant="contained"
@@ -96,25 +94,18 @@ const Login = () => {
                                     Sign In
                                 </Button>
                             </Box>
-                            <NavLink
-                                to="/register"
-                                style={{ textDecoration: 'none' }}
+                            <Typography
+                                color="textSecondary"
+                                variant="body2"
                             >
-                                <Typography
-                                    color="textSecondary"
-                                    variant="body2"
+                                Don&apos;t have an account?
+                                {' '}
+                                <NavLink
+                                    to="/register"
                                 >
-                                    Don&apos;t have an account?
-                                    {' '}
-                                    <NavLink
-                                        to="/register"
-                                    >
-                                        <Link>
-                                            Sign Up
-                                        </Link>
-                                    </NavLink>
-                                </Typography>
-                            </NavLink>
+                                    Sign Up
+                                </NavLink>
+                            </Typography>
                         </form>
                     </Paper>
 
