@@ -94,7 +94,7 @@ const Register = () => {
                         style={{ textDecoration: 'none' }}
                     >
                         <Button
-                            component="a"
+                            component="p"
                             startIcon={<ArrowBackIcon fontSize="small" />}
                         >
                             Dashboard
@@ -116,9 +116,7 @@ const Register = () => {
                             <NavLink
                                 to="/login"
                             >
-                                <Link>
-                                    Sign In
-                                </Link>
+                                Sign In
                             </NavLink>
                         </Typography>
                     </Box>

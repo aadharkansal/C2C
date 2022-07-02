@@ -48,7 +48,7 @@ const Login = () => {
                         style={{ textDecoration: 'none' }}
                     >
                         <Button
-                            component="a"
+                            component="p"
                             startIcon={<ArrowBackIcon fontSize="small" />}
                         >
                             Dashboard
@@ -94,23 +94,18 @@ const Login = () => {
                                     Sign In
                                 </Button>
                             </Box>
-                            <NavLink
-                                to="/register"
-                                style={{ textDecoration: 'none' }}
+                            <Typography
+                                color="textSecondary"
+                                variant="body2"
                             >
-                                <Typography
-                                    color="textSecondary"
-                                    variant="body2"
+                                Don&apos;t have an account?
+                                {' '}
+                                <NavLink
+                                    to="/register"
                                 >
-                                    Don&apos;t have an account?
-                                    {' '}
-                                    <NavLink
-                                        to="/register"
-                                    >
-                                        Sign Up
-                                    </NavLink>
-                                </Typography>
-                            </NavLink>
+                                    Sign Up
+                                </NavLink>
+                            </Typography>
                         </form>
                     </Paper>
 
