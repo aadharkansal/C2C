@@ -1,4 +1,4 @@
-from turtle import ondrag
+import uuid
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -10,6 +10,7 @@ from document.models import Document
 # Create your models here.
 
 class UserBankData(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     account_no = models.IntegerField(blank=False, unique=True , validators=[MaxLengthValidator(10),MinLengthValidator(10)])
     bank_name = models.CharField(max_length=255, blank=False)
     bank_code = models.IntegerField(blank=False, validators=[MaxLengthValidator(4),MinLengthValidator(4)])
@@ -20,6 +21,7 @@ class UserBankData(models.Model):
 
 
 class UserDocuments(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     aadhaar_card = models.ForeignKey(Document, on_delete=models.CASCADE, blank=False, related_name='user_aadhaar')
     pan_card = models.ForeignKey(Document, on_delete=models.CASCADE, blank=False, related_name='user_pan')
     salary_slips = models.ManyToManyField(Document, blank=False, related_name='user_salaryslips')
@@ -49,6 +51,7 @@ class UserManager(BaseUserManager):
     
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     email = models.EmailField(max_length = 255, unique = True, db_index = True)
     username = models.CharField(max_length = 255, unique = True, null=True)
     password = models.CharField(max_length=255)
