@@ -2,7 +2,6 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.conf import settings
 from document.models import Document
 
@@ -11,13 +10,14 @@ from document.models import Document
 
 class UserBankData(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    account_no = models.IntegerField(blank=False, unique=True , validators=[MaxLengthValidator(10),MinLengthValidator(10)])
+    account_no = models.IntegerField(blank=False, unique=True)
     bank_name = models.CharField(max_length=255, blank=False)
-    bank_code = models.IntegerField(blank=False, validators=[MaxLengthValidator(4),MinLengthValidator(4)])
+    bank_code = models.IntegerField(blank=False)
     bank_address = models.TextField(blank=False)
+    wallet_balance = models.PositiveBigIntegerField(default=0)
 
     def __str__(self):
-        return self.account_no
+        return str(self.account_no)
 
 
 class UserDocuments(models.Model):
@@ -75,3 +75,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def token(self):
         refresh = RefreshToken.for_user(self)
         return str(refresh.access_token)
+    
+    def add_money_wallet(self, amount_to_add):
+        if(amount_to_add>0):
+            self.user_bank_data.wallet_balance += amount_to_add
+            self.user_bank_data.save()
+        else:
+            raise ValueError('amount cannot be negative...')
+
