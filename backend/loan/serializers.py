@@ -2,8 +2,12 @@ from rest_framework import serializers
 
 from .models import Loan
 
+from users.serializers import UserListSerializer
+
 
 class LoanSerializer(serializers.ModelSerializer):
+    applied_by = UserListSerializer()
+    approved_by = UserListSerializer()
     class Meta:
         model = Loan
-        fields = "__all__"
+        fields = ["id", "type", "amount", "applied_by", "tenure", "interest", "is_approved", "approved_by"]

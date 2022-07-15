@@ -22,3 +22,13 @@ class Loans(generics.ListAPIView):
         
         except Exception:
             return Response(data=[], status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request):
+        try:
+            serializer = LoanSerializer(data=request.data, many=True)
+            print(serializer)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
