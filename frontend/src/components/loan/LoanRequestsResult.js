@@ -16,7 +16,7 @@ import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { getInitials } from '../utils/get-initials';
 
-const LoanRequestsResult = ({ customers }) => {
+const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 
@@ -45,14 +45,16 @@ const LoanRequestsResult = ({ customers }) => {
                                     Loan Tenure
                                 </TableCell>
                                 <TableCell>
-                                    Mode of Payment
+                                    Proposed Interest
                                 </TableCell>
                                 <TableCell>
                                     Loan Amount
                                 </TableCell>
-                                <TableCell>
+                                {want_give_loan_button &&
+                                    <TableCell>
 
-                                </TableCell>
+                                    </TableCell>
+                                }
 
                             </TableRow>
                         </TableHead>
@@ -79,29 +81,31 @@ const LoanRequestsResult = ({ customers }) => {
                                                 color="textPrimary"
                                                 variant="body1"
                                             >
-                                                {customer.name}
+                                                {customer.applied_by.first_name}
                                             </Typography>
                                         </Box>
                                     </TableCell>
                                     <TableCell>
-                                        {customer.email}
+                                        {customer.applied_by.email}
                                     </TableCell>
                                     <TableCell>
-                                        {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                                        {customer.tenure}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.phone}
+                                        {customer.interest}
                                     </TableCell>
                                     <TableCell>
-                                        {format(customer.createdAt, 'dd/MM/yyyy')}
+                                        {customer.amount}
                                     </TableCell>
-                                    <TableCell>
-                                        <Button
-                                            variant="contained"
-                                        >
-                                            Give Loan
-                                        </Button>
-                                    </TableCell>
+                                    {want_give_loan_button &&
+                                        <TableCell>
+                                            <Button
+                                                variant="contained"
+                                            >
+                                                Give Loan
+                                            </Button>
+                                        </TableCell>
+                                    }
                                 </TableRow>
                             ))}
                         </TableBody>
