@@ -4,12 +4,12 @@ import { Helmet } from "react-helmet";
 import LoanRequestsResult from '../loan/LoanRequestsResult';
 import { loanRequests } from "../../dummy_data/loan_request";
 
-const LoanRequests = () => {
-    // const [loanRequests, setLoanRequests] = useState([]);
+const LoanTaken = () => {
+    // const [loanRequests, setLoanRequests] = useState([]); 
 
     useEffect(() => {
         const getLoansList = () => {
-            const URL = "http://127.0.0.1:8000/loans/";
+            const URL = "http://127.0.0.1:8000/loans?applied=true";
 
             fetch(URL)
                 .then((response) => response.json())
@@ -34,7 +34,7 @@ const LoanRequests = () => {
             }}
         >
             <Typography variant="h3">
-                Loan Requests
+                Loans Taken
             </Typography>
             <Container maxWidth={false}>
 
@@ -47,4 +47,4 @@ const LoanRequests = () => {
 };
 
 
-export default LoanRequests;
+export default LoanTaken;

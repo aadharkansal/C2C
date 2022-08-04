@@ -6,21 +6,29 @@ import NotFound from './components/pages/NotFound';
 import Register from './components/pages/Register';
 import Layout from './components/layout/Layout';
 import LoanRequests from "./components/pages/LoanRequests";
+import LoansGiven from "./components/pages/LoanGiven";
+import LoansTaken from "./components/pages/LoanTaken";
 import Account from "./components/pages/Account";
+import PrivateRoutes from "./utility/PrivateRoutes";
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
     <div className="App">
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/loans" element={<LoanRequests />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
+            <Route path="/loans" element={<PrivateRoutes><LoanRequests /></PrivateRoutes>} />
+            <Route path="/loans/given" element={<PrivateRoutes><LoansGiven /></PrivateRoutes>} />
+            <Route path="/loans/taken" element={<PrivateRoutes><LoansTaken /></PrivateRoutes>} />
+            <Route path="/account" element={<PrivateRoutes><Account /></PrivateRoutes>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </Layout>
+      </AuthProvider>
     </div>
   );
 }

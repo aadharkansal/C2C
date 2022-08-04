@@ -6,11 +6,13 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
+import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
+    let { loginUser } = useContext(AuthContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -24,8 +26,17 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`username: ${email}\npassword: ${password}`);
+        fetch('http://127.0.0.1:8000/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+        }).then(
+            data => {
+                console.log(data);
+            }
+        ).catch(err => console.error(err));
 
+        alert(`username: ${email}\npassword: ${password}`);
     };
 
     return (
@@ -55,7 +66,7 @@ const Login = () => {
                         </Button>
                     </NavLink>
                     <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={loginUser}>
                             <Box sx={{ my: 3 }}>
                                 <Typography
                                     color="textPrimary"

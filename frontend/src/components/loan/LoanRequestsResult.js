@@ -1,11 +1,7 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { format } from 'date-fns';
 import {
     Avatar,
     Box,
     Button,
-    Card,
     Paper,
     Table,
     TableBody,
@@ -15,6 +11,9 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
+import { format } from 'date-fns';
+import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { getInitials } from '../utils/get-initials';
 
 const LoanRequestsResult = ({ customers }) => {
@@ -43,7 +42,7 @@ const LoanRequestsResult = ({ customers }) => {
                                     Email
                                 </TableCell>
                                 <TableCell>
-                                    CIBIL Score
+                                    Loan Tenure
                                 </TableCell>
                                 <TableCell>
                                     Mode of Payment
