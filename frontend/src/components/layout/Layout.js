@@ -8,6 +8,7 @@ import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicati
 import {
     AppBar,
     Box,
+    Button,
     CssBaseline,
     Divider,
     Drawer,
@@ -19,8 +20,9 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 
 const drawerWidth = 200;
 
@@ -60,6 +62,7 @@ const SideBarItems = [
 const ResponsiveDrawer = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
+    const { authTokens, logoutUser, loginUser } = useContext(AuthContext);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -106,9 +109,11 @@ const ResponsiveDrawer = (props) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        C2C
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                        Customer to Customer (C2C)
                     </Typography>
+                    {authTokens ? <Button color="inherit" onClick={logoutUser}>Logout</Button>
+                        : <Button color="inherit" onClick={loginUser}>Login</Button>}
                 </Toolbar>
             </AppBar>
             <Box
