@@ -5,6 +5,7 @@ import uuid
 # Create your models here.
 class LoanRequest(models.Model):
     offered_interest = models.FloatField(blank=False)
+    tenure = models.IntegerField(blank=False, null=True)
     offered_by = models.ForeignKey(User, blank=False, on_delete=models.PROTECT, related_name='loan_offered_by')
 
 class Loan(models.Model):
@@ -24,6 +25,7 @@ class Loan(models.Model):
     is_approved = models.BooleanField(default=False)
     approved_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT, related_name='loan_approved_by')
     requests = models.ManyToManyField(LoanRequest, blank=True, related_name='loan_requests')
+    loan_request_accepted = models.ForeignKey(LoanRequest, blank=True, null=True, on_delete=models.CASCADE, related_name='loan_request_accepted')
     loan_approved_date = models.DateTimeField(blank=True, null=True)
     is_loan_repaid = models.BooleanField(default=False)
     loan_repaid_date = models.DateTimeField(blank=True, null=True)
