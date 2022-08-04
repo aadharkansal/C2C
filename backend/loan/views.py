@@ -12,9 +12,9 @@ class Loans(generics.ListAPIView):
 
     def get(self, request):
         try:
-            if self.request.query_params.get('applied_by_user'):
+            if self.request.query_params.get('applied'):
                 serializer = LoanSerializer(self.get_queryset().filter(applied_by=request.user), many=True)
-            elif self.request.query_params.get('approved_by_user'):
+            elif self.request.query_params.get('approved'):
                 serializer = LoanSerializer(self.get_queryset().filter(approved_by=request.user), many=True)
             else:
                 serializer = LoanSerializer(self.get_queryset(), many=True)
