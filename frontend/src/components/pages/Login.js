@@ -6,11 +6,13 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
+import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
+    let { loginUser } = useContext(AuthContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -64,7 +66,7 @@ const Login = () => {
                         </Button>
                     </NavLink>
                     <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={loginUser}>
                             <Box sx={{ my: 3 }}>
                                 <Typography
                                     color="textPrimary"
