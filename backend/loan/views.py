@@ -1,9 +1,10 @@
-from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
-from .serializers import *
-from .models import Loan
+from rest_framework.response import Response
 from users.models import User
+
+from .models import Loan
+from .serializers import *
 
 
 class Loans(generics.ListCreateAPIView):
@@ -36,22 +37,20 @@ class Loans(generics.ListCreateAPIView):
 
 class LoansBid(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = LoanBidSerializer
 
     def post(self, request, loan_id):
         try:
-            serializer = LoanBidSerializer(data=request.data)
-            if serializer.is_valid():
-                user_bidded = User.objects.get(id=serializer.data.get('offered_by'))
-                loan_request = LoanRequest.objects.create(
-                    offered_interest = serializer.data.get('offered_interest'),
-                    tenure = serializer.data.get('tenure'),
-                    offered_by = user_bidded
-                )
-                try:
-                    Loan.objects.get(id=loan_id).requests.add(loan_request)
-                except Exception as e:
-                    return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            user_bidded = User.objects.get(email=request.data.get('email'))
+            print(user_bidded, "AD")
+            loan_request = LoanRequest.objects.create(
+                offered_interest = request.data.get('offered_interest'),
+                tenure = request.data.get('tenure'),
+                offered_by = user_bidded
+            )
+            try:
+                Loan.objects.get(id=loan_id).requests.add(loan_request)
+            except Exception as e:
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
@@ -65,8 +64,10 @@ class LoansBidConfirm(generics.ListCreateAPIView):
         try:
             loan_request = LoanRequest.objects.get(id=request.data.get('loan_request_id'))
             loan = Loan.objects.get(id=loan_id)
-            if loan.applied_by == request.user:
+            if loan.applied_by == request.user and loan.is_approved == False:
+                loan.is_approved = True
                 loan.loan_request_accepted = loan_request
+                loan.approved_by = loan_request.offered_by
                 loan.save()
             else:
                 return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)

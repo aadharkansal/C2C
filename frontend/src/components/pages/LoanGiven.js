@@ -1,24 +1,30 @@
 import { Box, Container, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Helmet } from "react-helmet";
 import LoanRequestsResult from '../loan/LoanRequestsResult';
-import { loanRequests } from "../../dummy_data/loan_request";
+import AuthContext from '../../context/AuthContext';
 
 const LoanGiven = () => {
-    // const [loanRequests, setLoanRequests] = useState([]);
+    const [loanRequests, setLoanRequests] = useState([]);
+    let { authTokens, logoutUser } = useContext(AuthContext)
+
+    let getLoansList = async () => {
+        let response = await fetch('http://127.0.0.1:8000/loans?approved=true', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + String(authTokens.token)
+            }
+        })
+        let data = await response.json()
+
+        if (response.status === 200) setLoanRequests(data);
+        else logoutUser()
+    }
 
     useEffect(() => {
-        const getLoansList = () => {
-            const URL = "http://127.0.0.1:8000/loans?approved=true";
-
-            fetch(URL)
-                .then((response) => response.json())
-                .then((data) => {
-                    // setLoanRequests(data);
-                })
-        }
-        // getLoansList();
-        // console.log(getLoansList);
+        getLoansList();
+        console.log(authTokens)
     }, [])
 
     return <>

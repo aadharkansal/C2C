@@ -16,4 +16,4 @@ class LoanSerializer(serializers.ModelSerializer):
 class LoanBidSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoanRequest
-        fields = ["offered_interest", "tenure", "offered_by"]
+        fields = ["offered_interest", "tenure", "email"]
