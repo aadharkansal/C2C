@@ -58,20 +58,6 @@ const Register = () => {
         }
     }
 
-    const handleNext = () => {
-        if (activeStep == 0) {
-            setActiveStep(1);
-        }
-        else {
-            if (checked !== true) alert("Please accept terms and conditions");
-            else alert(`First Name: ${firstName}\nLast Name: ${lastName}\nemail: ${email}\nPassword: ${password}`);
-        }
-    };
-
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
-
     return (
         <>
             <Helmet>
