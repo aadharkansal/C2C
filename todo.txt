@@ -1,0 +1,23 @@
+Backend :
+1. Authentication
+2. Loan Model
+3. API to get list of loans  (order by -id)
+4. API to get list of loans given and taken by a user (order by -id)
+5. Add one more field in user model for money added in wallet, method to add money in wallet
+6. API for loans given and taken by user
+7. Functionality to give loan, accept loan
+8. Loan request API should filter the status of loan for 'pending' and  'in_review'
+
+Frontend :
+1. Add authentication
+2. Add register page
+3. After Backend api is created create loan request, loans given, loans taken pages and dashboard page
+4. Swap mode of payment with status
+
+
+Applies for loan -> People offer the loan and tell their interest rate -> Accepts one of the loans
+
+auto rejection on selecting one of the available loan offer
+status(pending, in_review, rejected, approved)
+loan_repaid 
+date_of_loan_accepted

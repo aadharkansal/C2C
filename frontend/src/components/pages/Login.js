@@ -24,8 +24,17 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`username: ${email}\npassword: ${password}`);
+        fetch('http://127.0.0.1:8000/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+        }).then(
+            data => {
+                console.log(data);
+            }
+        ).catch(err => console.error(err));
 
+        alert(`username: ${email}\npassword: ${password}`);
     };
 
     return (
