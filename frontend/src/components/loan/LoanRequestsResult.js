@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Box,
     Button, Modal, Paper, Table,
     TableBody,
@@ -30,7 +29,7 @@ const style = {
 const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const [loanID, setLoanID] = useState("");
     const handleClose = () => setLoanID("");
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(8);
     const [page, setPage] = useState(0);
     let { authTokens } = useContext(AuthContext)
 
@@ -146,12 +145,6 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                                 display: 'flex'
                                             }}
                                         >
-                                            <Avatar
-                                                src={customer.avatarUrl}
-                                                sx={{ mr: 2 }}
-                                            >
-                                                {getInitials(customer.name)}
-                                            </Avatar>
                                             <Typography
                                                 color="textPrimary"
                                                 variant="body1"
