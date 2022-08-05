@@ -51,7 +51,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + String(authTokens.token)
             },
-            body: JSON.stringify({ 'tenure': e.target.tenure.value, 'offered_interest': e.target.interest.value, 'email': authTokens.email })
+            body: JSON.stringify({ 'tenure': +e.target.tenure.value, 'offered_interest': +e.target.interest.value, 'email': authTokens.email })
         })
         let data = await response
 

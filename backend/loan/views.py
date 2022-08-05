@@ -61,7 +61,6 @@ class LoansBid(generics.ListCreateAPIView):
             
             try:
                 loan = Loan.objects.get(id=loan_id)
-                print(loan)
                 loan.bids.add(loan_request)
                 loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount)
                 loan_request.save()

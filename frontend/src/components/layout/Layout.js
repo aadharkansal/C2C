@@ -29,19 +29,14 @@ const drawerWidth = 200;
 
 const SideBarItems = [
     {
-        name: "Loan Requests",
-        to: "loans",
-        icon: <CreditScoreSharpIcon />
-    },
-    {
         name: "Account",
         to: "account",
         icon: <AccountCircleSharpIcon />
     },
     {
-        name: "Settings",
-        to: "settings",
-        icon: <SettingsApplicationsSharpIcon />
+        name: "Loan Requests",
+        to: "",
+        icon: <CreditScoreSharpIcon />
     },
     {
         name: "Loans Given",
