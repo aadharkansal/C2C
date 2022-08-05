@@ -29,7 +29,6 @@ const style = {
 
 const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const [loanID, setLoanID] = useState("");
-    const handleOpen = (id) => setLoanID(id);
     const handleClose = () => setLoanID("");
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);

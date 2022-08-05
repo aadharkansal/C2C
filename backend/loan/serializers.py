@@ -9,7 +9,7 @@ class LoanRequestSerializer(serializers.ModelSerializer):
     offered_by = UserListSerializer()
     class Meta:
         model = LoanBid
-        fields = ["offered_interest", "tenure", "offered_by", "status", "amount_to_pay"]
+        fields = ["id", "offered_interest", "tenure", "offered_by", "status", "amount_to_pay"]
 
 
 class LoanSerializer(serializers.ModelSerializer):

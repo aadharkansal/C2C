@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from django.contrib import auth
+from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 
 from .models import User
@@ -24,7 +23,7 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user:
             raise AuthenticationFailed('Invalid credentials, try again')
 
-        return {"email": user.email, "token": user.token}
+        return {"email": user.email, "token": user.token, "id": user.id}
 
 
 class UserSerializer(serializers.ModelSerializer):
