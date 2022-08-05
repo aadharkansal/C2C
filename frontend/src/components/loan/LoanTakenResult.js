@@ -15,7 +15,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
+    width: 750,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -39,12 +39,13 @@ const LoanTakenResult = ({ customers }) => {
     };
 
     const handleSubmit = async (bidID) => {
+        console.log(bidID);
+        console.log(loanID);
         let response = await fetch('http://127.0.0.1:8000/loans/bid/' + String(loanID) + '/confirm', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: "Bearer " + String(authTokens.token),
-                loan_request_id
             },
             body: JSON.stringify({ 'loan_request_id': bidID })
         })
@@ -52,43 +53,47 @@ const LoanTakenResult = ({ customers }) => {
 
         if (data.status === 201) {
             alert("Bid Accepted");
+            window.location.reload();
         } else {
             alert('Something went wrong!');
         }
     }
 
-    const bids_list = <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-                <TableRow>
-                    <TableCell align="right">email</TableCell>
-                    <TableCell align="right">tenure&nbsp;(g)</TableCell>
-                    <TableCell align="right">interest&nbsp;(g)</TableCell>
-                    <TableCell align="right"></TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {bids.map((bid) => (
-                    <TableRow
-                        key={bid.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell align="right">{bid.offered_by.email}</TableCell>
-                        <TableCell align="right">{bid.tenure}</TableCell>
-                        <TableCell align="right">{bid.interest}</TableCell>
-                        <TableCell align="right">
-                            <Button
-                                variant="contained"
-                                onClick={() => handleSubmit(bid.id)}
-                            >
-                                Accept Bid
-                            </Button>
-                        </TableCell>
+    const bids_list =
+        bids.length ? <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="right">Loan Date</TableCell>
+                        <TableCell align="right">Repayment Date</TableCell>
+                        <TableCell align="right">Amount to be paid</TableCell>
+                        <TableCell align="right">tenure</TableCell>
+                        <TableCell align="right">interest</TableCell>
+                        <TableCell align="right"></TableCell>
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
+                </TableHead>
+                <TableBody>
+                    {bids.map((bid) => (
+                        <TableRow
+                            key={bid.id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align="right">{bid.offered_by.email}</TableCell>
+                            <TableCell align="right">{bid.tenure}</TableCell>
+                            <TableCell align="right">{bid.offered_interest}</TableCell>
+                            <TableCell align="right">
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleSubmit(bid.id)}
+                                >
+                                    Accept Bid
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer> : <p>No BIDS</p>
 
     return (
         <Paper>
@@ -98,7 +103,10 @@ const LoanTakenResult = ({ customers }) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>
-                                    Date of application
+                                    Loan Date
+                                </TableCell>
+                                <TableCell>
+                                    Loan Repayment Date
                                 </TableCell>
                                 <TableCell>
                                     Loan Tenure
@@ -108,6 +116,9 @@ const LoanTakenResult = ({ customers }) => {
                                 </TableCell>
                                 <TableCell>
                                     Amount
+                                </TableCell>
+                                <TableCell>
+                                    Amount to be paid
                                 </TableCell>
                                 <TableCell>
                                     Lender email
@@ -121,7 +132,10 @@ const LoanTakenResult = ({ customers }) => {
                                     key={customer.id}
                                 >
                                     <TableCell>
-                                        {customer.loan_approved_date}
+                                        {customer.loan_approved_date ? customer.loan_approved_date : "--"}
+                                    </TableCell>
+                                    <TableCell>
+                                        {customer.loan_payment_date ? customer.loan_payment_date : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.tenure}
@@ -133,12 +147,15 @@ const LoanTakenResult = ({ customers }) => {
                                         {customer.amount}
                                     </TableCell>
                                     <TableCell>
+                                        {customer.amount_to_pay ? customer.amount_to_pay : "--"}
+                                    </TableCell>
+                                    <TableCell>
                                         {customer.is_approved ? customer.approved_by.email
                                             : <Button variant="contained" onClick={() => {
-                                                // setBids(customer.requests)
+                                                setBids(customer.bids)
                                                 setLoanID(customer.id)
                                             }}
-                                            > Give Loan </Button>
+                                            > View Bids </Button>
                                         }
                                     </TableCell>
                                 </TableRow>

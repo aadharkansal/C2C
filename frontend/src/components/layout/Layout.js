@@ -4,6 +4,7 @@ import CurrencyRupeeSharpIcon from '@mui/icons-material/CurrencyRupeeSharp';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoneyIcon from '@mui/icons-material/Money';
+import AddCardIcon from '@mui/icons-material/AddCard';
 import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
 import {
     AppBar,
@@ -56,7 +57,12 @@ const SideBarItems = [
         name: "Loans Taken",
         to: "loans/taken",
         icon: <MoneyIcon />
-    }
+    },
+    {
+        name: "Create Loan Request",
+        to: "loans/create",
+        icon: <AddCardIcon />
+    },
 ];
 
 const ResponsiveDrawer = (props) => {
