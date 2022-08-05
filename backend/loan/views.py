@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -81,6 +82,7 @@ class LoansBidConfirm(generics.ListCreateAPIView):
             loan_request = LoanBid.objects.get(id=request.data.get('loan_request_id'))
             loan = Loan.objects.get(id=loan_id)
             if loan.applied_by == request.user and loan.is_approved == False:
+                loan.loan_approved_date = datetime.now()
                 loan.is_approved = True
                 loan.loan_bid_accepted = loan_request
                 loan.approved_by = loan_request.offered_by
