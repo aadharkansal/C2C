@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
 import { useEffect, useState, useContext } from 'react';
 import { Helmet } from "react-helmet";
-import LoanRequestsResult from '../loan/LoanRequestsResult';
+import LoanGivenResult from '../loan/LoanGivenResult';
 import AuthContext from '../../context/AuthContext';
 
 const LoanGiven = () => {
@@ -45,7 +45,7 @@ const LoanGiven = () => {
             <Container maxWidth={false}>
 
                 <Box sx={{ mt: 3 }}>
-                    <LoanRequestsResult customers={loanRequests} want_give_loan_button={true} />
+                    <LoanGivenResult customers={loanRequests} want_give_loan_button={true} />
                 </Box>
             </Container>
         </Box>
