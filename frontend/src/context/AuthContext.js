@@ -21,11 +21,10 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify({ 'email': e.target.email.value, 'password': e.target.password.value })
         })
         let data = await response.json()
-        console.log("RAJ", e.target.email.value, e.target.password.value, data);
+
         if (response.status === 200) {
             setAuthTokens(data.token);
             localStorage.setItem('authTokens', JSON.stringify(data));
-            console.log("RAJK");
             navigate("./");
         } else {
             alert('Something went wrong!');
