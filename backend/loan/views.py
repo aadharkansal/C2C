@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -59,9 +60,8 @@ class LoansBid(generics.ListCreateAPIView):
             
             try:
                 loan = Loan.objects.get(id=loan_id)
-                print(loan)
                 loan.bids.add(loan_request)
-                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount, "hello", "world")
+                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount)
                 loan_request.save()
             except Exception as e:
                 print(e)

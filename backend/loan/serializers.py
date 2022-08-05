@@ -1,8 +1,7 @@
 from rest_framework import serializers
+from users.serializers import UserListSerializer
 
 from .models import Loan, LoanBid
-
-from users.serializers import UserListSerializer
 
 
 class LoanRequestSerializer(serializers.ModelSerializer):
@@ -16,10 +15,11 @@ class LoanSerializer(serializers.ModelSerializer):
     applied_by = UserListSerializer()
     approved_by = UserListSerializer()
     bids = LoanRequestSerializer(many=True)
+    loan_bid_accepted = LoanRequestSerializer()
     class Meta:
         model = Loan
         fields = ["id", "type", "amount", "applied_by", "tenure",
-                    "interest", "is_approved", "approved_by", "bids", "loan_approved_date", "loan_repayment_date"]
+                    "interest", "is_approved", "approved_by", "bids", "loan_approved_date", "loan_repayment_date", "loan_bid_accepted"]
 
 
 class LoanCreateSerializer(serializers.ModelSerializer):
