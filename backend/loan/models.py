@@ -32,4 +32,4 @@ class Loan(models.Model):
     status = models.CharField(max_length=15, choices=LoanStatus.choices, default=LoanStatus.IN_REVIEW)
 
     def __str__(self):
-        return f'{self.applied_by}-{self.type}'
+        return f'{self.applied_by}-{self.amount}-{self.amount}'

@@ -10,7 +10,6 @@ from .serializers import *
 class Loans(generics.ListCreateAPIView):
     queryset = Loan.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = LoanSerializer
 
     def get(self, request):
         try:
@@ -22,13 +21,23 @@ class Loans(generics.ListCreateAPIView):
                 serializer = LoanSerializer(self.get_queryset(), many=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         
-        except Exception:
+        except Exception as e:
+            print(e)
             return Response(data=[], status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
         try:
-            serializer = LoanSerializer(data=request.data, many=True)
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = LoanCreateSerializer(data=request.data)
+            if serializer.is_valid():
+                applied_by = User.objects.get(id=serializer.data.get('applied_by'))
+                loan = Loan.objects.create(
+                    amount=serializer.data.get('amount'),
+                    tenure=serializer.data.get('tenure'),
+                    interest=serializer.data.get('interest'),
+                    applied_by=applied_by
+                )
+                return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             print(e)
