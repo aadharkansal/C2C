@@ -1,9 +1,10 @@
-from rest_framework.exceptions import AuthenticationFailed
 from django.core.exceptions import ValidationError
-from rest_framework.response import Response
 from rest_framework import generics, status
-from .serializers import *
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.response import Response
+
 from .models import User
+from .serializers import *
 
 
 class Login(generics.GenericAPIView):
@@ -13,8 +14,14 @@ class Login(generics.GenericAPIView):
         try:
             serializer = self.serializer_class(data = request.data)
             serializer.is_valid(raise_exception = True)
+            user = User.objects.get(email=serializer.data.get('email'))
+            data = {
+                "email": serializer.data.get('email'),
+                "token": serializer.data.get('token'),
+                "id": user.id
+            }
             
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            return Response(data=data, status=status.HTTP_200_OK)
         
         except Exception:
             raise AuthenticationFailed("Invalid credentials. Try Again...")
