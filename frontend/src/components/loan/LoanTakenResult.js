@@ -109,16 +109,16 @@ const LoanTakenResult = ({ customers }) => {
                                     Loan Repayment Date
                                 </TableCell>
                                 <TableCell>
-                                    Loan Tenure
+                                    Loan Tenure (in Months)
                                 </TableCell>
                                 <TableCell>
-                                    Interest
+                                    Interest (Per Month)
                                 </TableCell>
                                 <TableCell>
-                                    Amount
+                                    Amount (INR)
                                 </TableCell>
                                 <TableCell>
-                                    Amount to be paid
+                                    Amount to be paid (INR)
                                 </TableCell>
                                 <TableCell>
                                     Lender email
@@ -135,7 +135,7 @@ const LoanTakenResult = ({ customers }) => {
                                         {customer.loan_approved_date ? customer.loan_approved_date : "--"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.loan_payment_date ? customer.loan_payment_date : "--"}
+                                        {customer.loan_repayment_date ? customer.loan_repayment_date : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.tenure}
@@ -147,7 +147,7 @@ const LoanTakenResult = ({ customers }) => {
                                         {customer.amount}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.amount_to_pay ? customer.amount_to_pay : "--"}
+                                        {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.is_approved ? customer.approved_by.email
