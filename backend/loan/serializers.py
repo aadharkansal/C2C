@@ -19,7 +19,7 @@ class LoanSerializer(serializers.ModelSerializer):
     loan_bid_accepted = LoanRequestSerializer()
     class Meta:
         model = Loan
-        fields = ["id", "type", "amount", "applied_by", "tenure", "interest"
+        fields = ["id", "type", "amount", "applied_by", "tenure", "interest",
                     "is_approved", "approved_by", "bids", "loan_bid_accepted", "loan_approved_date", "loan_repayment_date"]
 
 

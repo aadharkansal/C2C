@@ -1,5 +1,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -20,7 +21,7 @@ class Loans(generics.ListCreateAPIView):
             elif self.request.query_params.get('approved'):
                 serializer = LoanSerializer(self.get_queryset().filter(approved_by=request.user), many=True)
             else:
-                serializer = LoanSerializer(self.get_queryset(), many=True)
+                serializer = LoanSerializer(self.get_queryset().filter(~Q(applied_by=request.user)&Q(is_approved=False)), many=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         
         except Exception as e:
