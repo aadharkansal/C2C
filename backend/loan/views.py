@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from users.models import User
 
-from .models import Loan
+from .models import *
 from .serializers import *
 
 
@@ -50,14 +50,13 @@ class LoansBid(generics.ListCreateAPIView):
     def post(self, request, loan_id):
         try:
             user_bidded = User.objects.get(email=request.data.get('email'))
-            print(user_bidded, "AD")
-            loan_request = LoanRequest.objects.create(
+            loan_request = LoanBid.objects.create(
                 offered_interest = request.data.get('offered_interest'),
                 tenure = request.data.get('tenure'),
                 offered_by = user_bidded
             )
             try:
-                Loan.objects.get(id=loan_id).requests.add(loan_request)
+                Loan.objects.get(id=loan_id).bids.add(loan_request)
             except Exception as e:
                 return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(status=status.HTTP_201_CREATED)
@@ -71,13 +70,16 @@ class LoansBidConfirm(generics.ListCreateAPIView):
 
     def post(self, request, loan_id):
         try:
-            loan_request = LoanRequest.objects.get(id=request.data.get('loan_request_id'))
+            loan_request = LoanBid.objects.get(id=request.data.get('loan_request_id'))
             loan = Loan.objects.get(id=loan_id)
             if loan.applied_by == request.user and loan.is_approved == False:
                 loan.is_approved = True
-                loan.loan_request_accepted = loan_request
+                loan.loan_bid_accepted = loan_request
                 loan.approved_by = loan_request.offered_by
+                loan.bids.all().update(status=LoanBid.LoanBidStatus.REJECTED)
                 loan.save()
+                loan_request.status = LoanBid.LoanBidStatus.APPROVED
+                loan_request.save()
             else:
                 return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
             return Response(status=status.HTTP_201_CREATED)
