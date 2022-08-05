@@ -55,13 +55,21 @@ class LoansBid(generics.ListCreateAPIView):
                 tenure = request.data.get('tenure'),
                 offered_by = user_bidded
             )
+            
             try:
-                Loan.objects.get(id=loan_id).bids.add(loan_request)
+                loan = Loan.objects.get(id=loan_id)
+                print(loan)
+                loan.bids.add(loan_request)
+                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount, "hello", "world")
+                loan_request.save()
             except Exception as e:
+                print(e)
+                loan_request.delete()
                 return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
+            loan_request.delete()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
