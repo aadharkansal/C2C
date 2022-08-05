@@ -13,6 +13,11 @@ class LoanBid(models.Model):
     tenure = models.IntegerField(blank=False, null=True)
     offered_by = models.ForeignKey(User, blank=False, on_delete=models.PROTECT, related_name='loan_offered_by')
     status = models.CharField(max_length=15, choices=LoanBidStatus.choices, default=LoanBidStatus.PENDING)
+    amount_to_pay = models.FloatField(blank=True, null=True)
+
+    def amount_to_be_paid(self, amount):
+        return (amount*self.tenure*self.offered_interest)/100
+
 
 class Loan(models.Model):
 
@@ -34,7 +39,7 @@ class Loan(models.Model):
     loan_bid_accepted = models.ForeignKey(LoanBid, blank=True, null=True, on_delete=models.CASCADE, related_name='loan_bid_accepted')
     loan_approved_date = models.DateTimeField(blank=True, null=True)
     is_loan_repaid = models.BooleanField(default=False)
-    loan_repaid_date = models.DateTimeField(blank=True, null=True)
+    loan_repayment_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=15, choices=LoanStatus.choices, default=LoanStatus.IN_REVIEW)
 
     def __str__(self):

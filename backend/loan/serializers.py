@@ -9,7 +9,8 @@ class LoanRequestSerializer(serializers.ModelSerializer):
     offered_by = UserListSerializer()
     class Meta:
         model = LoanBid
-        fields = ["offered_interest", "tenure", "offered_by", "id"]
+        fields = ["id", "offered_interest", "tenure", "offered_by", "status", "amount_to_pay"]
+
 
 class LoanSerializer(serializers.ModelSerializer):
     applied_by = UserListSerializer()
@@ -17,8 +18,8 @@ class LoanSerializer(serializers.ModelSerializer):
     bids = LoanRequestSerializer(many=True)
     class Meta:
         model = Loan
-        fields = ["id", "type", "amount", "applied_by", "tenure", 
-                    "interest", "is_approved", "approved_by", "bids"]
+        fields = ["id", "type", "amount", "applied_by", "tenure",
+                    "interest", "is_approved", "approved_by", "bids", "loan_approved_date", "loan_repayment_date"]
 
 
 class LoanCreateSerializer(serializers.ModelSerializer):

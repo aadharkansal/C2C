@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -55,13 +56,21 @@ class LoansBid(generics.ListCreateAPIView):
                 tenure = request.data.get('tenure'),
                 offered_by = user_bidded
             )
+            
             try:
-                Loan.objects.get(id=loan_id).bids.add(loan_request)
+                loan = Loan.objects.get(id=loan_id)
+                print(loan)
+                loan.bids.add(loan_request)
+                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount, "hello", "world")
+                loan_request.save()
             except Exception as e:
+                print(e)
+                loan_request.delete()
                 return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
+            loan_request.delete()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -73,6 +82,7 @@ class LoansBidConfirm(generics.ListCreateAPIView):
             loan_request = LoanBid.objects.get(id=request.data.get('loan_request_id'))
             loan = Loan.objects.get(id=loan_id)
             if loan.applied_by == request.user and loan.is_approved == False:
+                loan.loan_approved_date = datetime.now()
                 loan.is_approved = True
                 loan.loan_bid_accepted = loan_request
                 loan.approved_by = loan_request.offered_by
