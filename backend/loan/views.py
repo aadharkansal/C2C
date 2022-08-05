@@ -1,4 +1,5 @@
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -61,7 +62,7 @@ class LoansBid(generics.ListCreateAPIView):
                 loan = Loan.objects.get(id=loan_id)
                 print(loan)
                 loan.bids.add(loan_request)
-                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount, "hello", "world")
+                loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount)
                 loan_request.save()
             except Exception as e:
                 print(e)
@@ -83,6 +84,7 @@ class LoansBidConfirm(generics.ListCreateAPIView):
             loan = Loan.objects.get(id=loan_id)
             if loan.applied_by == request.user and loan.is_approved == False:
                 loan.loan_approved_date = datetime.now()
+                loan.loan_repayment_date = datetime.now()+relativedelta(months=+loan.tenure)
                 loan.is_approved = True
                 loan.loan_bid_accepted = loan_request
                 loan.approved_by = loan_request.offered_by
