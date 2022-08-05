@@ -30,7 +30,7 @@ const LoanGiven = () => {
     return <>
         <Helmet>
             <title>
-                Loan Requests
+                Loan Given
             </title>
         </Helmet>
         <Box
@@ -40,7 +40,7 @@ const LoanGiven = () => {
             }}
         >
             <Typography variant="h3">
-                Loans Approved
+                Loans Given
             </Typography>
             <Container maxWidth={false}>
 

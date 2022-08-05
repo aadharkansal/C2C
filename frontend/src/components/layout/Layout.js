@@ -29,11 +29,6 @@ const drawerWidth = 200;
 
 const SideBarItems = [
     {
-        name: "Dashboard",
-        to: "",
-        icon: <DashboardCustomizeSharpIcon />
-    },
-    {
         name: "Loan Requests",
         to: "loans",
         icon: <CreditScoreSharpIcon />

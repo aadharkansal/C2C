@@ -19,8 +19,7 @@ function App() {
       <AuthProvider>
         <Layout>
           <Routes>
-            <Route path="/" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
-            <Route path="/loans" element={<PrivateRoutes><LoanRequests /></PrivateRoutes>} />
+            <Route path="/" element={<PrivateRoutes><LoanRequests /></PrivateRoutes>} />
             <Route path="/loans/given" element={<PrivateRoutes><LoansGiven /></PrivateRoutes>} />
             <Route path="/loans/taken" element={<PrivateRoutes><LoansTaken /></PrivateRoutes>} />
             <Route path="/account" element={<PrivateRoutes><Account /></PrivateRoutes>} />
