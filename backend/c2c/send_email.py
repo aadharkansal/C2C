@@ -1,34 +1,43 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from rest_framework.exceptions import AuthenticationFailed
+from cgitb import html
+from mailjet_rest import Client
+import os
+from django.conf import settings
+settings.configure()
 from decouple import config
+from messages import messages
 
-
-def send(msg: str, sender: str, receivers: list):
-    try:
-        server=smtplib.SMTP(host=config('EMAIL_HOST'),port=config('EMAIL_PORT'))
-        server.ehlo()
-        server.starttls()
-        server.login(config('EMAIL_USERNAME'),config('EMAIL_PASSWORD'))
-        server.sendmail(sender,receivers,msg)
-        server.quit()
-    except Exception:
-        raise AuthenticationFailed("SMTP Login failed. Try Again...")
-
-
-def send_email(text='Email_body',subject='Hello word',from_email='',to_emails=[]):
-    try:
-        if type(to_emails) is not list:
-            raise ValueError('receivers is not a list...')
-        msg=MIMEMultipart('alternative')
-        msg['From']=from_email
-        msg['To']=", ".join(to_emails)
-        msg['Subject']=subject
-        txt_part=MIMEText(text,'plain')
-        msg.attach(txt_part)
-        msg_str=msg.as_string()
-        send(msg, from_email, to_emails)
-        return True
-    except Exception:
-        return False
+api_key = config('EMAIL_API_KEY')
+api_secret = config('EMAIL_API_SECRET')
+mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+params = {
+  "name": "aadhar",
+  "amount": "345",
+  "tenure": "34",
+  "borrower": "tanmay",
+  "interest": "4.5",
+  "link": "www.google.com"
+}
+mess = messages['confirm_pay'].format(**params)
+data = {
+  'Messages': [
+    {
+      "From": {
+        "Email": "andy8510connan@gmail.com",
+        "Name": "admin"
+      },
+      "To": [
+        {
+          "Email": "tanmayraj29.99@gmail.com",
+          "Name": "abc"
+        }
+      ],
+      "Subject": "testing C2C",
+      "TextPart": "My first Mailjet email",
+      "HTMLPart": mess,
+      "CustomID": "AppGettingStartedTest"
+    }
+  ]
+}
+result = mailjet.send.create(data=data)
+print(result.status_code)
+print(result.json())
