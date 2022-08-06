@@ -1,32 +1,14 @@
 import uuid
-from django.db import models
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.conf import settings
-from document.models import Document
 
+from django.conf import settings
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
+from django.db import models
+from django.db.models import Q
+from loan.models import *
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your models here.
-
-class UserBankData(models.Model):
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    account_no = models.IntegerField(blank=False, unique=True)
-    bank_name = models.CharField(max_length=255, blank=False)
-    bank_code = models.IntegerField(blank=False)
-    bank_address = models.TextField(blank=False)
-    wallet_balance = models.PositiveBigIntegerField(default=0)
-
-    def __str__(self):
-        return str(self.account_no)
-
-
-class UserDocuments(models.Model):
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    aadhaar_card = models.ForeignKey(Document, on_delete=models.CASCADE, blank=False, related_name='user_aadhaar')
-    pan_card = models.ForeignKey(Document, on_delete=models.CASCADE, blank=False, related_name='user_pan')
-    salary_slips = models.ManyToManyField(Document, blank=False, related_name='user_salaryslips')
-    user_bank_info = models.ForeignKey(UserBankData, on_delete=models.CASCADE, blank=False, related_name='user_bank_details')
-    ctc = models.IntegerField(blank=False)
 
 
 class UserManager(BaseUserManager):
@@ -59,9 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = False)
     is_staff = models.BooleanField(default = False)
-    profile_photo = models.ImageField(upload_to='uploads/profile_photos/', blank=True)
-    user_bank_data = models.ForeignKey(UserBankData, null=True, blank=True, on_delete=models.CASCADE, related_name='user_bank_data')
-    user_documents = models.ForeignKey(UserDocuments, null=True, blank=True, on_delete=models.CASCADE, related_name='user_documents')
+    salary = models.BigIntegerField(blank=False)
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     objects = UserManager()
@@ -75,11 +55,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     def token(self):
         refresh = RefreshToken.for_user(self)
         return str(refresh.access_token)
+
+    def total_loan_given(self):
+        loans = Loan.objects.filter(Q(is_approved=self.id)&Q(is_approved=True))
+        total_loan_amount = 0
+        for loan in loans:
+            total_loan_amount += loan.amount
+        return total_loan_amount
     
-    def add_money_wallet(self, amount_to_add):
-        if(amount_to_add>0):
-            self.user_bank_data.wallet_balance += amount_to_add
-            self.user_bank_data.save()
-        else:
-            raise ValueError('amount cannot be negative...')
+    def total_loan_taken(self):
+        loans = Loan.objects.filter(Q(is_applied=self.id)&Q(is_approved=True))
+        total_loan_amount = 0
+        for loan in loans:
+            total_loan_amount += loan.amount
+        return total_loan_amount
+    
+    def max_credit_limit(self):
+        return self.salary/5
+
+    def debt_limit_remaining(self):
+        loans = Loan.objects.filter(Q(applied_by=self.id)&Q(is_approved=True))
+        total_remaining = 0
+        for loan in loans:
+            total_remaining += loan.loan_bid_accepted.amount_to_pay
+        return self.max_credit_limit()-total_remaining
 
