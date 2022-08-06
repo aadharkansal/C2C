@@ -16,7 +16,7 @@ class LoanBid(models.Model):
     amount_to_pay = models.FloatField(blank=True, null=True)
 
     def amount_to_be_paid(self, amount):
-        return (amount*self.tenure*self.offered_interest)/100
+        return round(amount * (1 + self.offered_interest / 1200) ** self.tenure, 2)
 
 
 class Loan(models.Model):
