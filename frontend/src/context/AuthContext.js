@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             navigate("./");
             window.location.reload();
         } else {
-            alert('Something went wrong!');
+            alert('INVALID CREDENTIALS!');
         }
     }
 
