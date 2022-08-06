@@ -138,13 +138,13 @@ const LoanTakenResult = ({ customers }) => {
                                         {customer.is_approved ? get_date(customer.loan_approved_date) : ""}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {customer.is_approved ? get_date(customer.loan_repayment_date) : "BIDS"}
+                                        {customer.is_approved ? get_date(customer.loan_repayment_date) : <i>BIDS</i>}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {customer.is_approved ? customer.loan_bid_accepted.tenure : "IN"}
+                                        {customer.is_approved ? customer.loan_bid_accepted.tenure : <i>IN</i>}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {customer.is_approved ? customer.loan_bid_accepted.offered_interest : "REVIEW"}
+                                        {customer.is_approved ? customer.loan_bid_accepted.offered_interest : <i>REVIEW</i>}
                                     </TableCell>
                                     <TableCell align="center">
                                         {customer.amount}
