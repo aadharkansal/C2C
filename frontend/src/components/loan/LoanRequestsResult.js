@@ -12,7 +12,6 @@ import {
 import { useContext, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AuthContext from '../../context/AuthContext';
-import { getInitials } from '../utils/get-initials';
 
 const style = {
     position: 'absolute',
@@ -109,23 +108,20 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     Name
                                 </TableCell>
-                                <TableCell>
-                                    Email
+                                <TableCell align="center">
+                                    Loan Tenure (In Months)
                                 </TableCell>
-                                <TableCell>
-                                    Loan Tenure
+                                <TableCell align="center">
+                                    Proposed Interest (Per Annum)
                                 </TableCell>
-                                <TableCell>
-                                    Proposed Interest
-                                </TableCell>
-                                <TableCell>
-                                    Loan Amount
+                                <TableCell align="center">
+                                    Loan Amount (INR)
                                 </TableCell>
                                 {want_give_loan_button &&
-                                    <TableCell>
+                                    <TableCell align="center">
 
                                     </TableCell>
                                 }
@@ -138,35 +134,20 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                     hover
                                     key={customer.id}
                                 >
-                                    <TableCell>
-                                        <Box
-                                            sx={{
-                                                alignItems: 'center',
-                                                display: 'flex'
-                                            }}
-                                        >
-                                            <Typography
-                                                color="textPrimary"
-                                                variant="body1"
-                                            >
-                                                {customer.applied_by.first_name}
-                                            </Typography>
-                                        </Box>
+                                    <TableCell align="center">
+                                        {customer.applied_by.first_name}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.applied_by.email}
-                                    </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.tenure}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.interest}
+                                    <TableCell align="center">
+                                        {customer.interest + "%"}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.amount}
+                                    <TableCell align="center">
+                                        {customer.amount.toFixed(2)}
                                     </TableCell>
                                     {want_give_loan_button &&
-                                        <TableCell>
+                                        <TableCell align="center">
                                             <Button
                                                 variant="contained"
                                                 onClick={() => setLoanID(customer.id)}

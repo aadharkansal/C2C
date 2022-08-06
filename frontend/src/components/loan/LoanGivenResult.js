@@ -23,12 +23,13 @@ const style = {
 };
 
 const LoanGivenResult = ({ customers }) => {
-    const [bids, setBids] = useState([]);
-    const [loanID, setLoanID] = useState("");
-    const handleClose = () => setLoanID("");
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
-    let { authTokens } = useContext(AuthContext)
+
+    const get_date = (date) => {
+        let d = new Date(date);
+        return d.toLocaleDateString();
+    }
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -45,25 +46,25 @@ const LoanGivenResult = ({ customers }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     Loan Date
                                 </TableCell>
-                                <TableCell>
-                                    Loan Repayment Date
+                                <TableCell align="center">
+                                    Repayment Date
                                 </TableCell>
-                                <TableCell>
-                                    Loan Tenure (in Months)
+                                <TableCell align="center">
+                                    Tenure (In Months)
                                 </TableCell>
-                                <TableCell>
-                                    Interest (Per Month)
+                                <TableCell align="center">
+                                    Interest (Per Annum)
                                 </TableCell>
-                                <TableCell>
-                                    Amount loaned(INR)
+                                <TableCell align="center">
+                                    Amount loaned (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Amount to be paid (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Borrower's email
                                 </TableCell>
                             </TableRow>
@@ -74,26 +75,28 @@ const LoanGivenResult = ({ customers }) => {
                                     hover
                                     key={customer.id}
                                 >
-                                    <TableCell>
-                                        {customer.loan_approved_date ? customer.loan_approved_date : "--"}
+                                    <TableCell align="center">
+                                        {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
+                                        {console.log(customer.loan_approved_date)}
+                                        {console.log(new Date(customer.loan_approved_date))}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.loan_repayment_date ? customer.loan_repayment_date : "--"}
+                                    <TableCell align="center">
+                                        {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.tenure}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.interest}
+                                    <TableCell align="center">
+                                        {customer.loan_bid_accepted.offered_interest}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.amount}
+                                    <TableCell align="center">
+                                        {customer.loan_bid_accepted.amount_to_pay}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
                                     </TableCell>
-                                    <TableCell>
-                                        {customer.approved_by.email}
+                                    <TableCell align="center">
+                                        {customer.applied_by.email}
                                     </TableCell>
                                 </TableRow>
                             ))}

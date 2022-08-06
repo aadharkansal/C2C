@@ -1,4 +1,3 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
@@ -6,18 +5,14 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
-import { NavLink } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 
 const LoanCreate = () => {
     let { authTokens } = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
-        // console.log(isNan(+e.target.amount.value));
-        // console.log(isNan(+e.target.tenure.value));
-        // console.log(isNan(+e.target.interest.value));
         e.preventDefault();
         if (isNaN(+e.target.amount.value) == true
             || isNaN(+e.target.tenure.value) == true
@@ -71,27 +66,30 @@ const LoanCreate = () => {
                             </Box>
                             <TextField
                                 fullWidth
-                                label="Amount"
+                                label="Amount (INR)"
                                 margin="normal"
                                 name="amount"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <TextField
                                 fullWidth
-                                label="Tenure in months"
+                                label="Tenure (In Months)"
                                 margin="normal"
                                 name="tenure"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <TextField
                                 fullWidth
-                                label="Interest per month"
+                                label="Interest (Per Annum)"
                                 margin="normal"
                                 name="interest"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <Box sx={{ py: 2 }}>
                                 <Button
