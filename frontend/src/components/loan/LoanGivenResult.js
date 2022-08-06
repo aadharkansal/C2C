@@ -46,25 +46,25 @@ const LoanGivenResult = ({ customers }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     Loan Date
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Repayment Date
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Tenure (In Months)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Interest (Per Annum)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Amount loaned (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Amount to be paid (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Borrower's email
                                 </TableCell>
                             </TableRow>
@@ -75,27 +75,27 @@ const LoanGivenResult = ({ customers }) => {
                                     hover
                                     key={customer.id}
                                 >
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
                                         {console.log(customer.loan_approved_date)}
                                         {console.log(new Date(customer.loan_approved_date))}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.tenure}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_bid_accepted.offered_interest}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_bid_accepted.amount_to_pay}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.applied_by.email}
                                     </TableCell>
                                 </TableRow>

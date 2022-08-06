@@ -40,7 +40,7 @@ const LoanRequests = () => {
             }}
         >
             <Typography variant="h3">
-                Loan Requests
+                Pending Loan Requests
             </Typography>
             <Container maxWidth={false}>
 

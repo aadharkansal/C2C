@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 200) {
             setAuthTokens(data.token);
             localStorage.setItem('authTokens', JSON.stringify(data));
-            navigate("./");
+            navigate("/account");
             window.location.reload();
         } else {
             alert('INVALID CREDENTIALS!');

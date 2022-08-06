@@ -34,7 +34,7 @@ const SideBarItems = [
         icon: <AccountCircleSharpIcon />
     },
     {
-        name: "Loan Requests",
+        name: "Pending Requests",
         to: "",
         icon: <CreditScoreSharpIcon />
     },

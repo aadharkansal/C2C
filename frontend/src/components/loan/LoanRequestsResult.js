@@ -108,20 +108,20 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     Name
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Loan Tenure (In Months)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Proposed Interest (Per Annum)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Loan Amount (INR)
                                 </TableCell>
                                 {want_give_loan_button &&
-                                    <TableCell>
+                                    <TableCell align="center">
 
                                     </TableCell>
                                 }
@@ -134,32 +134,20 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                     hover
                                     key={customer.id}
                                 >
-                                    <TableCell>
-                                        <Box
-                                            sx={{
-                                                alignItems: 'center',
-                                                display: 'flex'
-                                            }}
-                                        >
-                                            <Typography
-                                                color="textPrimary"
-                                                variant="body1"
-                                            >
-                                                {customer.applied_by.first_name}
-                                            </Typography>
-                                        </Box>
+                                    <TableCell align="center">
+                                        {customer.applied_by.first_name}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.tenure}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.interest + "%"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.amount.toFixed(2)}
                                     </TableCell>
                                     {want_give_loan_button &&
-                                        <TableCell>
+                                        <TableCell align="center">
                                             <Button
                                                 variant="contained"
                                                 onClick={() => setLoanID(customer.id)}

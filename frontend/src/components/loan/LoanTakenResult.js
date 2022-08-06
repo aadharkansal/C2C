@@ -69,12 +69,10 @@ const LoanTakenResult = ({ customers }) => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="right">Loan Date</TableCell>
-                        <TableCell align="right">Repayment Date</TableCell>
-                        <TableCell align="right">Amount to be paid</TableCell>
-                        <TableCell align="right">tenure</TableCell>
-                        <TableCell align="right">interest</TableCell>
-                        <TableCell align="right"></TableCell>
+                        <TableCell align="center">Amount to be paid</TableCell>
+                        <TableCell align="center">tenure</TableCell>
+                        <TableCell align="center">interest</TableCell>
+                        <TableCell align="center"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -83,10 +81,10 @@ const LoanTakenResult = ({ customers }) => {
                             key={bid.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell align="right">{bid.offered_by.email}</TableCell>
-                            <TableCell align="right">{bid.tenure}</TableCell>
-                            <TableCell align="right">{bid.offered_interest}</TableCell>
-                            <TableCell align="right">
+                            <TableCell align="center">{bid.amount_to_pay}</TableCell>
+                            <TableCell align="center">{bid.tenure}</TableCell>
+                            <TableCell align="center">{bid.offered_interest}</TableCell>
+                            <TableCell align="center">
                                 <Button
                                     variant="contained"
                                     onClick={() => handleSubmit(bid.id)}
@@ -107,25 +105,25 @@ const LoanTakenResult = ({ customers }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell align="center">
                                     Loan Date
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Repayment Date
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Tenure (In Months)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Interest (Per Annum)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Amount (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Amount to be paid (INR)
                                 </TableCell>
-                                <TableCell>
+                                <TableCell align="center">
                                     Lender email
                                 </TableCell>
                             </TableRow>
@@ -136,25 +134,25 @@ const LoanTakenResult = ({ customers }) => {
                                     hover
                                     key={customer.id}
                                 >
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? get_date(customer.loan_approved_date) : ""}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? get_date(customer.loan_repayment_date) : "BIDS"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? customer.loan_bid_accepted.tenure : "IN"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? customer.loan_bid_accepted.offered_interest : "REVIEW"}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.amount}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? customer.loan_bid_accepted.amount_to_pay : ""}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">
                                         {customer.is_approved ? customer.approved_by.email
                                             : <Button variant="contained" onClick={() => {
                                                 setBids(customer.bids)
