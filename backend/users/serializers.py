@@ -37,3 +37,15 @@ class UserListSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "first_name", "last_name", "email", "username", "profile_photo"]
 
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "salary"]
+
+class UserGetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = "__all__"
