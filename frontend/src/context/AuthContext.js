@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
             setAuthTokens(data.token);
             localStorage.setItem('authTokens', JSON.stringify(data));
             navigate("./");
+            window.location.reload();
         } else {
             alert('Something went wrong!');
         }

@@ -24,21 +24,6 @@ const LoanBid = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch('http://127.0.0.1:8000/users/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: password })
-        }).then(
-            data => {
-                console.log(data);
-            }
-        ).catch(err => console.error(err));
-
-        alert(`username: ${email}\npassword: ${password}`);
-    };
-
     return (
         <>
             <Helmet>

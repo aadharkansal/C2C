@@ -12,7 +12,6 @@ import {
 import { useContext, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AuthContext from '../../context/AuthContext';
-import { getInitials } from '../utils/get-initials';
 
 const style = {
     position: 'absolute',

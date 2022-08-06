@@ -23,12 +23,13 @@ const style = {
 };
 
 const LoanGivenResult = ({ customers }) => {
-    const [bids, setBids] = useState([]);
-    const [loanID, setLoanID] = useState("");
-    const handleClose = () => setLoanID("");
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
-    let { authTokens } = useContext(AuthContext)
+
+    const get_date = (date) => {
+        let d = new Date(date);
+        return d.toLocaleDateString();
+    }
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -75,10 +76,12 @@ const LoanGivenResult = ({ customers }) => {
                                     key={customer.id}
                                 >
                                     <TableCell>
-                                        {customer.loan_approved_date ? customer.loan_approved_date : "--"}
+                                        {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
+                                        {console.log(customer.loan_approved_date)}
+                                        {console.log(new Date(customer.loan_approved_date))}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.loan_repayment_date ? customer.loan_repayment_date : "--"}
+                                        {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.tenure}
@@ -93,7 +96,7 @@ const LoanGivenResult = ({ customers }) => {
                                         {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.approved_by.email}
+                                        {customer.applied_by.email}
                                     </TableCell>
                                 </TableRow>
                             ))}

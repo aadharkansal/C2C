@@ -6,7 +6,7 @@ import AuthContext from '../../context/AuthContext';
 
 const LoanRequests = () => {
     const [loanRequests, setLoanRequests] = useState([]);
-    let { authTokens, logoutUser } = useContext(AuthContext)
+    let { authTokens } = useContext(AuthContext)
 
     let getLoansList = async () => {
         let response = await fetch('http://127.0.0.1:8000/loans/', {
@@ -19,7 +19,7 @@ const LoanRequests = () => {
         let data = await response.json()
 
         if (response.status === 200) setLoanRequests(data);
-        else logoutUser()
+        else alert("Something went wrong");
     }
 
     useEffect(() => {

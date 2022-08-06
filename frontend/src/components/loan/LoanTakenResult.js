@@ -30,6 +30,11 @@ const LoanTakenResult = ({ customers }) => {
     const [page, setPage] = useState(0);
     let { authTokens } = useContext(AuthContext)
 
+    const get_date = (date) => {
+        let d = new Date(date);
+        return d.toLocaleDateString();
+    }
+
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
     };
@@ -132,10 +137,10 @@ const LoanTakenResult = ({ customers }) => {
                                     key={customer.id}
                                 >
                                     <TableCell>
-                                        {customer.loan_approved_date ? customer.loan_approved_date : "--"}
+                                        {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.loan_repayment_date ? customer.loan_repayment_date : "--"}
+                                        {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.tenure}
@@ -147,7 +152,7 @@ const LoanTakenResult = ({ customers }) => {
                                         {customer.amount}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
+                                        {customer.is_approved ? customer.loan_bid_accepted.amount_to_pay : "--"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.is_approved ? customer.approved_by.email
