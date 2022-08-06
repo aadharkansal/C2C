@@ -66,27 +66,30 @@ const LoanCreate = () => {
                             </Box>
                             <TextField
                                 fullWidth
-                                label="Amount"
+                                label="Amount (INR)"
                                 margin="normal"
                                 name="amount"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <TextField
                                 fullWidth
-                                label="Tenure in months"
+                                label="Tenure (In Months)"
                                 margin="normal"
                                 name="tenure"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <TextField
                                 fullWidth
-                                label="Interest per month"
+                                label="Interest (Per Annum)"
                                 margin="normal"
                                 name="interest"
                                 type="text"
                                 variant="outlined"
+                                required
                             />
                             <Box sx={{ py: 2 }}>
                                 <Button

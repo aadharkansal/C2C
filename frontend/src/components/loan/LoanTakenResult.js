@@ -111,13 +111,13 @@ const LoanTakenResult = ({ customers }) => {
                                     Loan Date
                                 </TableCell>
                                 <TableCell>
-                                    Loan Repayment Date
+                                    Repayment Date
                                 </TableCell>
                                 <TableCell>
-                                    Loan Tenure (in Months)
+                                    Tenure (In Months)
                                 </TableCell>
                                 <TableCell>
-                                    Interest (Per Month)
+                                    Interest (Per Annum)
                                 </TableCell>
                                 <TableCell>
                                     Amount (INR)
@@ -137,22 +137,22 @@ const LoanTakenResult = ({ customers }) => {
                                     key={customer.id}
                                 >
                                     <TableCell>
-                                        {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
+                                        {customer.is_approved ? get_date(customer.loan_approved_date) : ""}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}
+                                        {customer.is_approved ? get_date(customer.loan_repayment_date) : "BIDS"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.tenure}
+                                        {customer.is_approved ? customer.loan_bid_accepted.tenure : "IN"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.interest}
+                                        {customer.is_approved ? customer.loan_bid_accepted.offered_interest : "REVIEW"}
                                     </TableCell>
                                     <TableCell>
                                         {customer.amount}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.is_approved ? customer.loan_bid_accepted.amount_to_pay : "--"}
+                                        {customer.is_approved ? customer.loan_bid_accepted.amount_to_pay : ""}
                                     </TableCell>
                                     <TableCell>
                                         {customer.is_approved ? customer.approved_by.email

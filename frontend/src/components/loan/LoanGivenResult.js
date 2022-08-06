@@ -50,16 +50,16 @@ const LoanGivenResult = ({ customers }) => {
                                     Loan Date
                                 </TableCell>
                                 <TableCell>
-                                    Loan Repayment Date
+                                    Repayment Date
                                 </TableCell>
                                 <TableCell>
-                                    Loan Tenure (in Months)
+                                    Tenure (In Months)
                                 </TableCell>
                                 <TableCell>
-                                    Interest (Per Month)
+                                    Interest (Per Annum)
                                 </TableCell>
                                 <TableCell>
-                                    Amount loaned(INR)
+                                    Amount loaned (INR)
                                 </TableCell>
                                 <TableCell>
                                     Amount to be paid (INR)
@@ -87,10 +87,10 @@ const LoanGivenResult = ({ customers }) => {
                                         {customer.tenure}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.interest}
+                                        {customer.loan_bid_accepted.offered_interest}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.amount}
+                                        {customer.loan_bid_accepted.amount_to_pay}
                                     </TableCell>
                                     <TableCell>
                                         {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}

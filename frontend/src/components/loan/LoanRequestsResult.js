@@ -112,16 +112,13 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                     Name
                                 </TableCell>
                                 <TableCell>
-                                    Email
+                                    Loan Tenure (In Months)
                                 </TableCell>
                                 <TableCell>
-                                    Loan Tenure
+                                    Proposed Interest (Per Annum)
                                 </TableCell>
                                 <TableCell>
-                                    Proposed Interest
-                                </TableCell>
-                                <TableCell>
-                                    Loan Amount
+                                    Loan Amount (INR)
                                 </TableCell>
                                 {want_give_loan_button &&
                                     <TableCell>
@@ -153,16 +150,13 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                         </Box>
                                     </TableCell>
                                     <TableCell>
-                                        {customer.applied_by.email}
-                                    </TableCell>
-                                    <TableCell>
                                         {customer.tenure}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.interest}
+                                        {customer.interest + "%"}
                                     </TableCell>
                                     <TableCell>
-                                        {customer.amount}
+                                        {customer.amount.toFixed(2)}
                                     </TableCell>
                                     {want_give_loan_button &&
                                         <TableCell>
