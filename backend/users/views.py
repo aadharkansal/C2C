@@ -55,7 +55,7 @@ class UserList(generics.ListCreateAPIView):
 
     def get(self, request):
         try:
-            user = User.objects.get(id=request.data.get('id'))
+            user = User.objects.get(id = request.query_params.get('id'))
             serializer = UserGetSerializer(user)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
@@ -68,8 +68,6 @@ class UserList(generics.ListCreateAPIView):
             try:
                 serializer.is_valid(raise_exception = True)
                 user = User.objects.get(id = request.query_params.get('id'))
-                user.first_name = serializer.data.get('first_name')
-                user.last_name = serializer.data.get('last_name')
                 user.salary = serializer.data.get('salary')
                 user.save()
                 return Response(data=serializer.data, status=status.HTTP_201_CREATED)

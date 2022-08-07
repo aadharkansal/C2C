@@ -42,7 +42,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "salary"]
+        fields = ["salary"]
 
 class UserGetSerializer(serializers.ModelSerializer):
 
