@@ -7,3 +7,13 @@ messages = {
 
     "bid_rejected": "<h4>Dear {name}, Your bid for a loan of Rs. {amount} has been rejected by {borrower}. You offered the loan for a period of {tenure} months with a {interest}% per annum interest.</h4>"
 }
+
+subjects = {
+    "confirm_pay": "Bid Accepted !!! Confirm Payment",
+    
+    "confirm_bid": "Bid Created",
+
+    "bid_notification": "New Bid",
+
+    "bid_rejected": "BId Rejected"
+}

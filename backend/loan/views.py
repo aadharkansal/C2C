@@ -5,6 +5,7 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from users.models import User
+from c2c.send_email import send_email
 
 from .models import *
 from .serializers import *
@@ -58,12 +59,26 @@ class LoansBid(generics.ListCreateAPIView):
                 tenure = request.data.get('tenure'),
                 offered_by = user_bidded
             )
-            
             try:
                 loan = Loan.objects.get(id=loan_id)
                 loan.bids.add(loan_request)
                 loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount)
                 loan_request.save()
+                user_name = f"{loan.applied_by.first_name} {loan.applied_by.last_name}"
+                mail_content = {
+                    "name": user_name,
+                    "amount": loan.amount
+                }
+                send_email("tanmayraj292000@gmail.com", user_name, 'bid_notification', mail_content)
+                user_bidded_name = f"{loan_request.offered_by.first_name} {loan_request.offered_by.last_name}"
+                mail_content = {
+                    "name": user_bidded_name,
+                    "borrower": user_name,
+                    "amount": loan.amount,
+                    "tenure": loan_request.tenure,
+                    "interest": loan_request.offered_interest
+                }
+                send_email("tanmayraj29.99@gmail.com",  user_bidded_name, 'confirm_bid', mail_content)
             except Exception as e:
                 print(e)
                 loan_request.delete()
@@ -86,15 +101,39 @@ class LoansBidConfirm(generics.ListCreateAPIView):
                 loan.loan_approved_date = datetime.now()
                 loan.loan_repayment_date = datetime.now()+relativedelta(months=+loan.tenure)
                 loan.is_approved = True
+                loan.is_ready_to_pay = True
                 loan.loan_bid_accepted = loan_request
                 loan.approved_by = loan_request.offered_by
                 loan.bids.all().update(status=LoanBid.LoanBidStatus.REJECTED)
                 loan.save()
                 loan_request.status = LoanBid.LoanBidStatus.APPROVED
                 loan_request.save()
+                user_name = f"{loan.applied_by.first_name} {loan.applied_by.last_name}"
+                user_bidded_name = f"{loan_request.offered_by.first_name} {loan_request.offered_by.last_name}"
+                mail_content = {
+                    "name": user_bidded_name,
+                    "borrower": user_name,
+                    "amount": loan.amount,
+                    "tenure": loan_request.tenure,
+                    "interest": loan_request.offered_interest,
+                    "link": "www.google.com"
+                }
+                send_email("tanmayraj29.99@gmail.com",  user_bidded_name, 'confirm_pay', mail_content)
             else:
                 return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GetLoan(generics.ListCreateAPIView):
+
+    def get(self, request, loan_id):
+        try:
+            loan = Loan.objects.get(id=loan_id)
+            serializer = LoanSerializer(loan)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(data=[], status=status.HTTP_404_NOT_FOUND)
