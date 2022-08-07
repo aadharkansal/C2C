@@ -41,6 +41,8 @@ class Loan(models.Model):
     is_loan_repaid = models.BooleanField(default=False)
     loan_repayment_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=15, choices=LoanStatus.choices, default=LoanStatus.IN_REVIEW)
+    is_ready_to_pay = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.applied_by}-{self.amount}-{self.amount}'
