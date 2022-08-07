@@ -1,5 +1,7 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
 
 # Create your models here.
 class LoanBid(models.Model):
@@ -15,7 +17,7 @@ class LoanBid(models.Model):
     amount_to_pay = models.FloatField(blank=True, null=True)
 
     def amount_to_be_paid(self, amount):
-        return round(amount * (1 + self.offered_interest / 100) ** (self.tenure / 12), 2)
+        return round(int(amount) * (1 + int(self.offered_interest) / 100) ** (int(self.tenure) / 12), 2)
         # compounded monthly
 
 

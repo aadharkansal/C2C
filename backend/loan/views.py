@@ -1,11 +1,12 @@
 from datetime import datetime
+
+from c2c.send_email import send_email
 from dateutil.relativedelta import relativedelta
 from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from users.models import User
-from c2c.send_email import send_email
 
 from .models import *
 from .serializers import *
@@ -86,7 +87,7 @@ class LoansBid(generics.ListCreateAPIView):
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
-            loan_request.delete()
+            # loan_request.delete()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

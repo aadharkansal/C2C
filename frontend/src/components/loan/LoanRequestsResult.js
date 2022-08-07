@@ -44,7 +44,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
         e.preventDefault();
         console.log("RAJJJ");
 
-        let response = await fetch('http://127.0.0.1:8000/loans/bid/' + String(loanID), {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
