@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import AuthContext from '../../context/AuthContext';
+import { useState, useEffect, useContext } from 'react';
 import {
     Box,
     Button,
@@ -7,120 +8,72 @@ import {
     CardHeader,
     Divider,
     Grid,
-    TextField
+    TextField,
+    Typography
 } from '@mui/material';
 
-export const AccountProfileDetails = (props) => {
-    const [values, setValues] = useState({
-        firstName: 'Katarina',
-        lastName: 'Smith',
-        email: 'demo@devias.io',
-        ctc: 0,
-    });
+export const AccountProfileDetails = ({ user }) => {
+    let { authTokens } = useContext(AuthContext);
 
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value
-        });
-    };
+    let updateSalary = async () => {
+        let salary = prompt("Please enter your salary:");
+        if (isNaN(salary)) {
+            alert("Please enter a valid salary");
+            return;
+        }
+        let response = await fetch('http://127.0.0.1:8000/users/?id=' + String(authTokens.id), {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + String(authTokens.token)
+            },
+            body: JSON.stringify({ 'salary': +salary })
+        })
+        console.log("RAJJJ");
+        console.log(response)
+        if (response.status === 201) window.location.reload();
+        else alert("Something went wrong");
+    }
 
-    return (
-        <form
-            autoComplete="off"
-            noValidate
-            {...props}
-        >
-            <Card>
-                <CardHeader
-                    subheader="The information can be edited"
-                    title="Profile"
-                />
-                <Divider />
-                <CardContent>
-                    <Grid
-                        container
-                        spacing={3}
-                    >
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                helperText="Please specify the first name"
-                                label="First name"
-                                name="firstName"
-                                onChange={handleChange}
-                                required
-                                value={values.firstName}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="Last name"
-                                name="lastName"
-                                onChange={handleChange}
-                                required
-                                value={values.lastName}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="Email Address"
-                                name="email"
-                                onChange={handleChange}
-                                required
-                                value={values.email}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="CTC"
-                                name="ctc"
-                                onChange={handleChange}
-                                type="number"
-                                value={values.ctc}
-                                variant="outlined"
-                            />
-                        </Grid>
-                    </Grid>
-                </CardContent>
-                <Divider />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        p: 2
-                    }}
+    return <Card>
+        <CardContent>
+            <Box
+                sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}
+            >
+                <Typography
+                    color="textPrimary"
+                    gutterBottom
+                    variant="h5"
                 >
-                    <Button
-                        color="primary"
-                        variant="contained"
-                    >
-                        Save details
-                    </Button>
-                </Box>
-            </Card>
-        </form>
-    );
+                    Salary: {user.salary}
+                </Typography>
+                <Typography
+                    color="textPrimary"
+                    gutterBottom
+                    variant="h5"
+                >
+                    Total Loan Given: {user.first_name + " " + user.last_name}
+                </Typography>
+                <Typography
+                    color="textPrimary"
+                    gutterBottom
+                    variant="h5"
+                >
+                    Total Loan Taken: {user.first_name + " " + user.last_name}
+                </Typography>
+                <Button
+                    mt={1}
+                    variant="contained"
+                    onClick={updateSalary}
+                >
+                    Update Salary
+                </Button>
+            </Box>
+        </CardContent>
+        <Divider />
+    </Card>
 };

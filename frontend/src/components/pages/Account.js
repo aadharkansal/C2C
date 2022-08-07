@@ -1,10 +1,38 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
+import AuthContext from '../../context/AuthContext';
 import { AccountProfile } from '../account/AccountProfile';
 import { AccountProfileDetails } from '../account/AccountProfileDetails';
 
-const Account = () => (
-    <>
+const Account = () => {
+    const [user, setUser] = useState({});
+    let { authTokens } = useContext(AuthContext);
+
+    let getUserDetail = async () => {
+        console.log("inside get");
+        let response = await fetch('http://127.0.0.1:8000/users/?id=' + String(authTokens.id), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + String(authTokens.token)
+            }
+        })
+        console.log("RAJJJ");
+        let data = await response.json();
+
+        if (response.status === 200) setUser(data);
+        else alert("Something went wrong");
+    }
+
+    useEffect(() => {
+        console.log("users get");
+        getUserDetail();
+        console.log(user);
+    }, [])
+
+
+    return <>
         <Helmet>
             <title>
                 Account | Material Kit
@@ -34,7 +62,7 @@ const Account = () => (
                         md={6}
                         xs={12}
                     >
-                        <AccountProfile />
+                        <AccountProfile user={user} />
                     </Grid>
                     <Grid
                         item
@@ -42,12 +70,12 @@ const Account = () => (
                         md={6}
                         xs={12}
                     >
-                        <AccountProfileDetails />
+                        <AccountProfileDetails user={user} />
                     </Grid>
                 </Grid>
             </Container>
         </Box>
     </>
-);
+};
 
 export default Account;
