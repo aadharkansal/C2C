@@ -1,27 +1,22 @@
-import AuthContext from '../../context/AuthContext';
-import { useState, useEffect, useContext } from 'react';
 import {
     Box,
     Button,
     Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Grid,
-    TextField,
-    Typography
+    CardContent, Divider, Typography
 } from '@mui/material';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
 
 export const AccountProfileDetails = ({ user }) => {
     let { authTokens } = useContext(AuthContext);
-
+    console.log(process.env.REACT_APP_BASE_URL);
     let updateSalary = async () => {
         let salary = prompt("Please enter your salary:");
         if (isNaN(salary)) {
             alert("Please enter a valid salary");
             return;
         }
-        let response = await fetch('http://127.0.0.1:8000/users/?id=' + String(authTokens.id), {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/?id=${String(authTokens.id)}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

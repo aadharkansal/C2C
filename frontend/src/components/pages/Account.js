@@ -11,7 +11,7 @@ const Account = () => {
 
     let getUserDetail = async () => {
         console.log("inside get");
-        let response = await fetch('http://127.0.0.1:8000/users/?id=' + String(authTokens.id), {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/?id=` + String(authTokens.id), {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

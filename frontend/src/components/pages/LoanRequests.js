@@ -9,7 +9,7 @@ const LoanRequests = () => {
     let { authTokens } = useContext(AuthContext);
 
     let getLoansList = async () => {
-        let response = await fetch('http://127.0.0.1:8000/loans/', {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

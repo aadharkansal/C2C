@@ -46,7 +46,7 @@ const LoanTakenResult = ({ customers }) => {
     const handleSubmit = async (bidID) => {
         console.log(bidID);
         console.log(loanID);
-        let response = await fetch('http://127.0.0.1:8000/loans/bid/' + String(loanID) + '/confirm', {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}loans/bid/${String(loanID)}/confirm`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
