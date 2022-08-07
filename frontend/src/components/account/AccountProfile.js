@@ -1,25 +1,15 @@
 import {
     Avatar,
     Box,
-    Button,
     Card,
-    CardActions,
     CardContent,
     Divider,
     Typography
 } from '@mui/material';
 
-const user = {
-    avatar: '/static/images/avatars/avatar_6.png',
-    city: 'Los Angeles',
-    country: 'USA',
-    jobTitle: 'Senior Developer',
-    name: 'Katarina Smith',
-    timezone: 'GTM-7'
-};
 
-export const AccountProfile = (props) => (
-    <Card {...props}>
+export const AccountProfile = ({ user }) => {
+    return <Card>
         <CardContent>
             <Box
                 sx={{
@@ -41,31 +31,17 @@ export const AccountProfile = (props) => (
                     gutterBottom
                     variant="h5"
                 >
-                    {user.name}
+                    {user.first_name + " " + user.last_name}
                 </Typography>
                 <Typography
-                    color="textSecondary"
-                    variant="body2"
+                    color="textPrimary"
+                    gutterBottom
+                    variant="h5"
                 >
-                    {`${user.city} ${user.country}`}
-                </Typography>
-                <Typography
-                    color="textSecondary"
-                    variant="body2"
-                >
-                    {user.timezone}
+                    {user.email}
                 </Typography>
             </Box>
         </CardContent>
         <Divider />
-        <CardActions>
-            <Button
-                color="primary"
-                fullWidth
-                variant="text"
-            >
-                Upload picture
-            </Button>
-        </CardActions>
     </Card>
-);
+};

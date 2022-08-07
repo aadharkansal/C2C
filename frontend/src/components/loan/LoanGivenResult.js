@@ -62,7 +62,7 @@ const LoanGivenResult = ({ customers }) => {
                                     Amount loaned (INR)
                                 </TableCell>
                                 <TableCell align="center">
-                                    Amount to be paid (INR)
+                                    Amount to be collected (INR)
                                 </TableCell>
                                 <TableCell align="center">
                                     Borrower's email
@@ -90,7 +90,7 @@ const LoanGivenResult = ({ customers }) => {
                                         {customer.loan_bid_accepted.offered_interest}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {customer.loan_bid_accepted.amount_to_pay}
+                                        {customer.amount}
                                     </TableCell>
                                     <TableCell align="center">
                                         {customer.loan_bid_accepted.amount_to_pay !== null ? customer.loan_bid_accepted.amount_to_pay : "--"}
