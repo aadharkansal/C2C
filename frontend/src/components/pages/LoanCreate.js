@@ -31,7 +31,6 @@ const LoanCreate = () => {
         })
 
         let data = await response
-        console.log(data);
         if (data.status === 201) {
             alert("Loan Request Created");
         } else {

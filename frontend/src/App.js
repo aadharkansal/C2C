@@ -13,7 +13,6 @@ import LoanCreate from "./components/pages/LoanCreate";
 import { AuthProvider } from './context/AuthContext'
 
 function App() {
-  console.log(process.env);
   return (
     <div className="App">
       <AuthProvider>

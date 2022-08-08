@@ -9,7 +9,6 @@ import AuthContext from '../../context/AuthContext';
 
 export const AccountProfileDetails = ({ user }) => {
     let { authTokens } = useContext(AuthContext);
-    console.log(process.env.REACT_APP_BASE_URL);
     let updateSalary = async () => {
         let salary = prompt("Please enter your salary:");
         if (isNaN(salary)) {
@@ -24,8 +23,6 @@ export const AccountProfileDetails = ({ user }) => {
             },
             body: JSON.stringify({ 'salary': +salary })
         })
-        console.log("RAJJJ");
-        console.log(response)
         if (response.status === 201) window.location.reload();
         else alert("Something went wrong");
     }

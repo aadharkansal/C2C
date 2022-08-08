@@ -24,7 +24,6 @@ const LoanRequests = () => {
 
     useEffect(() => {
         getLoansList();
-        console.log(authTokens)
     }, [])
 
     return <>

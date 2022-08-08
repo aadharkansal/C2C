@@ -10,7 +10,6 @@ const Account = () => {
     let { authTokens } = useContext(AuthContext);
 
     let getUserDetail = async () => {
-        console.log("inside get");
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/?id=` + String(authTokens.id), {
             method: 'GET',
             headers: {
@@ -18,7 +17,6 @@ const Account = () => {
                 Authorization: "Bearer " + String(authTokens.token)
             }
         })
-        console.log("RAJJJ");
         let data = await response.json();
 
         if (response.status === 200) setUser(data);
@@ -26,9 +24,7 @@ const Account = () => {
     }
 
     useEffect(() => {
-        console.log("users get");
         getUserDetail();
-        console.log(user);
     }, [])
 
 
