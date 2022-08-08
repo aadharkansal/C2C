@@ -42,7 +42,6 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("RAJJJ");
 
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}`, {
             method: 'POST',

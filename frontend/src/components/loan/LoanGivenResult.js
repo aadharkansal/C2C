@@ -77,8 +77,6 @@ const LoanGivenResult = ({ customers }) => {
                                 >
                                     <TableCell align="center">
                                         {customer.loan_approved_date ? get_date(customer.loan_approved_date) : "--"}
-                                        {console.log(customer.loan_approved_date)}
-                                        {console.log(new Date(customer.loan_approved_date))}
                                     </TableCell>
                                     <TableCell align="center">
                                         {customer.loan_repayment_date ? get_date(customer.loan_repayment_date) : "--"}

@@ -35,6 +35,8 @@ class Loans(generics.ListCreateAPIView):
             serializer = LoanCreateSerializer(data=request.data)
             if serializer.is_valid():
                 applied_by = User.objects.get(id=serializer.data.get('applied_by'))
+                if(applied_by.debt_limit_remaining >= serializer.data.get('amount')):
+                    raise ValueError()
                 loan = Loan.objects.create(
                     amount=serializer.data.get('amount'),
                     tenure=serializer.data.get('tenure'),
