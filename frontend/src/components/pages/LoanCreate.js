@@ -33,8 +33,9 @@ const LoanCreate = () => {
         let data = await response
         if (data.status === 201) {
             alert("Loan Request Created");
+            window.location.reload();
         } else {
-            alert('Something went wrong!');
+            alert('INTERNAL SERVER ERROR');
         }
     }
 

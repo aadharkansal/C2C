@@ -35,15 +35,15 @@ class Loans(generics.ListCreateAPIView):
             serializer = LoanCreateSerializer(data=request.data)
             if serializer.is_valid():
                 applied_by = User.objects.get(id=serializer.data.get('applied_by'))
-                if(applied_by.debt_limit_remaining >= serializer.data.get('amount')):
-                    raise ValueError()
-                loan = Loan.objects.create(
-                    amount=serializer.data.get('amount'),
-                    tenure=serializer.data.get('tenure'),
-                    interest=serializer.data.get('interest'),
-                    applied_by=applied_by
-                )
-                return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+                if(applied_by.debt_limit_remaining() >= serializer.data.get('amount')):
+                    Loan.objects.create(
+                        amount=serializer.data.get('amount'),
+                        tenure=serializer.data.get('tenure'),
+                        interest=serializer.data.get('interest'),
+                        applied_by=applied_by
+                    )
+                    return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+                return Response(data="Loan Limit exceeded", status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
@@ -53,13 +53,22 @@ class Loans(generics.ListCreateAPIView):
 
 class LoansBid(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
+    
+    def get(self, request, loan_id):
+        try:
+            bids_by_user = Loan.objects.get(id=loan_id).bids.all().filter(offered_by=request.user)
+            serializer = LoanRequestSerializer(bids_by_user, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(data=[], status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, loan_id):
         try:
             user_bidded = User.objects.get(email=request.data.get('email'))
             loan_request = LoanBid.objects.create(
                 offered_interest = request.data.get('offered_interest'),
-                tenure = request.data.get('tenure'),
+                tenure = int(request.data.get('tenure')),
                 offered_by = user_bidded
             )
             try:
@@ -89,7 +98,6 @@ class LoansBid(generics.ListCreateAPIView):
             return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
-            # loan_request.delete()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

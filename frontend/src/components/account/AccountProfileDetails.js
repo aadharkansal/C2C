@@ -11,8 +11,12 @@ export const AccountProfileDetails = ({ user }) => {
     let { authTokens } = useContext(AuthContext);
     let updateSalary = async () => {
         let salary = prompt("Please enter your salary:");
-        if (isNaN(salary)) {
-            alert("Please enter a valid salary");
+        if (isNaN(salary) || salary <= 0) {
+            alert("Please enter a valid number as salary");
+            return;
+        }
+        if (salary % 1) {
+            alert("Please enter salary as an integer");
             return;
         }
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/?id=${String(authTokens.id)}`, {
@@ -24,7 +28,7 @@ export const AccountProfileDetails = ({ user }) => {
             body: JSON.stringify({ 'salary': +salary })
         })
         if (response.status === 201) window.location.reload();
-        else alert("Something went wrong");
+        else alert("INTERNAL SERVER ERROR");
     }
 
     return <Card>

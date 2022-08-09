@@ -11,6 +11,7 @@ import Account from "./components/pages/Account";
 import PrivateRoutes from "./utility/PrivateRoutes";
 import LoanCreate from "./components/pages/LoanCreate";
 import { AuthProvider } from './context/AuthContext'
+import LoggedOutRoutes from './utility/LoggedOutRoutes';
 
 function App() {
   return (
@@ -23,8 +24,8 @@ function App() {
             <Route path="/loans/taken" element={<PrivateRoutes><LoansTaken /></PrivateRoutes>} />
             <Route path="/account" element={<PrivateRoutes><Account /></PrivateRoutes>} />
             <Route path="/loans/create" element={<PrivateRoutes><LoanCreate /></PrivateRoutes>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<LoggedOutRoutes><Login /></LoggedOutRoutes>} />
+            <Route path="/register" element={<LoggedOutRoutes >< Register /></LoggedOutRoutes>} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </Layout>

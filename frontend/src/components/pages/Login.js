@@ -39,17 +39,6 @@ const Login = () => {
                 }}
             >
                 <Container maxWidth="sm">
-                    <NavLink
-                        to="/"
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <Button
-                            component="p"
-                            startIcon={<ArrowBackIcon fontSize="small" />}
-                        >
-                            Dashboard
-                        </Button>
-                    </NavLink>
                     <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                         <form onSubmit={loginUser}>
                             <Box sx={{ my: 3 }}>

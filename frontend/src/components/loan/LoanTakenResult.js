@@ -44,7 +44,7 @@ const LoanTakenResult = ({ customers }) => {
     };
 
     const handleSubmit = async (bidID) => {
-        let response = await fetch(`${process.env.REACT_APP_BASE_URL}loans/bid/${String(loanID)}/confirm`, {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}/confirm`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,9 +57,9 @@ const LoanTakenResult = ({ customers }) => {
         if (data.status === 201) {
             alert("Bid Accepted");
             window.location.reload();
-        } else {
-            alert('Something went wrong!');
         }
+        else if (data.status === 405) alert("A bid for this loan has already been accepted");
+        else alert('INTERNAL SERVER ERROR');
     }
 
     const bids_list =

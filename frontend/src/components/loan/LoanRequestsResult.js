@@ -3,6 +3,7 @@ import {
     Button, Modal, Paper, Table,
     TableBody,
     TableCell,
+    TableContainer,
     TableHead,
     TablePagination,
     TableRow,
@@ -18,7 +19,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 750,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -26,8 +27,9 @@ const style = {
 };
 
 const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
+    const [bids, setBids] = useState([]);
     const [loanID, setLoanID] = useState("");
-    const handleClose = () => setLoanID("");
+    const handleClose = () => setBids([]);
     const [limit, setLimit] = useState(8);
     const [page, setPage] = useState(0);
     let { authTokens } = useContext(AuthContext)
@@ -43,6 +45,15 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (isNaN(e.target.tenure.value)) {
+            alert("Please enter a valid tenure value");
+            return;
+        }
+        if (isNaN(e.target.interest.value)) {
+            alert("Please enter a valid interest value");
+            return;
+        }
+
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}`, {
             method: 'POST',
             headers: {
@@ -55,10 +66,51 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
 
         if (data.status === 201) {
             setLoanID("");
-        } else {
-            alert('Something went wrong!');
+            alert("BID Created Successfully");
+            window.location.reload();
         }
+        else alert('Something went wrong!');
     }
+
+    const getBids = async (loanID) => {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + String(authTokens.token)
+            },
+        })
+        let data = await response.json()
+
+        if (response.status === 200) {
+            setBids(data);
+            console.log(data)
+            console.log(bids)
+        }
+        else alert('Something went wrong!');
+    }
+
+    const bids_list = bids.length ? <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="center">tenure</TableCell>
+                    <TableCell align="center">interest</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {bids.map((bid) => (
+                    <TableRow
+                        key={bid.id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        <TableCell align="center">{bid.tenure}</TableCell>
+                        <TableCell align="center">{bid.offered_interest}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </TableContainer> : <p>No BIDS</p>
 
     const bidding_form = <form onSubmit={handleSubmit}>
         <Box sx={{ my: 3 }}>
@@ -124,7 +176,9 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
 
                                     </TableCell>
                                 }
+                                <TableCell>
 
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -155,6 +209,8 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                             </Button>
                                         </TableCell>
                                     }
+                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> View Bids </Button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -178,6 +234,16 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
             >
                 <Box sx={style}>
                     {bidding_form}
+                </Box>
+            </Modal>
+            <Modal
+                open={bids.length}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    {bids_list}
                 </Box>
             </Modal>
         </Paper>
