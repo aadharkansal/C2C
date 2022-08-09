@@ -31,7 +31,7 @@ const Account = () => {
     return <>
         <Helmet>
             <title>
-                Account | Material Kit
+                Account
             </title>
         </Helmet>
         <Box

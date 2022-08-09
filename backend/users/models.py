@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = False)
     is_staff = models.BooleanField(default = False)
-    salary = models.BigIntegerField(blank=False)
+    salary = models.BigIntegerField(blank=False, default=0)
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     objects = UserManager()
@@ -57,14 +57,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return str(refresh.access_token)
 
     def total_loan_given(self):
-        loans = Loan.objects.filter(Q(is_approved=self.id)&Q(is_approved=True))
+        loans = Loan.objects.filter(Q(approved_by=self.id)&Q(is_approved=True))
         total_loan_amount = 0
         for loan in loans:
             total_loan_amount += loan.amount
         return total_loan_amount
     
     def total_loan_taken(self):
-        loans = Loan.objects.filter(Q(is_applied=self.id)&Q(is_approved=True))
+        loans = Loan.objects.filter(Q(applied_by=self.id)&Q(is_approved=True))
         total_loan_amount = 0
         for loan in loans:
             total_loan_amount += loan.amount

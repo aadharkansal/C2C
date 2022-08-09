@@ -9,6 +9,7 @@ import {
 import { useContext, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -29,6 +30,7 @@ const LoanTakenResult = ({ customers }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
     let { authTokens } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const get_date = (date) => {
         let d = new Date(date);
@@ -44,7 +46,7 @@ const LoanTakenResult = ({ customers }) => {
     };
 
     const handleSubmit = async (bidID) => {
-        let response = await fetch(`${process.env.REACT_APP_BASE_URL}loans/bid/${String(loanID)}/confirm`, {
+        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}/confirm`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,8 +59,11 @@ const LoanTakenResult = ({ customers }) => {
         if (data.status === 201) {
             alert("Bid Accepted");
             window.location.reload();
-        } else {
-            alert('Something went wrong!');
+        }
+        else if (data.status === 405) alert("A bid for this loan has already been accepted");
+        else {
+            alert('INTERNAL SERVER ERROR');
+            navigate("/login");
         }
     }
 

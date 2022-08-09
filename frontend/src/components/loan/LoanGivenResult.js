@@ -1,14 +1,12 @@
 import {
-    Box,
-    Button, Modal, Paper, Table,
+    Box, Paper, Table,
     TableBody,
-    TableCell, TableContainer, TableHead,
+    TableCell, TableHead,
     TablePagination,
     TableRow
 } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import AuthContext from '../../context/AuthContext';
 
 const style = {
     position: 'absolute',

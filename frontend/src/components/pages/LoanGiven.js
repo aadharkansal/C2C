@@ -1,8 +1,8 @@
 import { Box, Container, Typography } from '@mui/material';
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
-import LoanGivenResult from '../loan/LoanGivenResult';
 import AuthContext from '../../context/AuthContext';
+import LoanGivenResult from '../loan/LoanGivenResult';
 
 const LoanGiven = () => {
     const [loanRequests, setLoanRequests] = useState([]);
@@ -19,7 +19,10 @@ const LoanGiven = () => {
         let data = await response.json()
 
         if (response.status === 200) setLoanRequests(data);
-        else logoutUser()
+        else {
+            alert("AUTHENTICATION ERROR, Please login again");
+            logoutUser();
+        }
     }
 
     useEffect(() => {

@@ -6,13 +6,19 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const AccountProfileDetails = ({ user }) => {
+    const navigate = useNavigate();
     let { authTokens } = useContext(AuthContext);
     let updateSalary = async () => {
         let salary = prompt("Please enter your salary:");
-        if (isNaN(salary)) {
-            alert("Please enter a valid salary");
+        if (isNaN(salary) || salary <= 0) {
+            alert("Please enter a valid number as salary");
+            return;
+        }
+        if (salary % 1) {
+            alert("Please enter salary as an integer");
             return;
         }
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/users/?id=${String(authTokens.id)}`, {
@@ -24,7 +30,10 @@ export const AccountProfileDetails = ({ user }) => {
             body: JSON.stringify({ 'salary': +salary })
         })
         if (response.status === 201) window.location.reload();
-        else alert("Something went wrong");
+        else {
+            alert("INTERNAL SERVER ERROR");
+            navigate("/login");
+        }
     }
 
     return <Card>
@@ -48,14 +57,14 @@ export const AccountProfileDetails = ({ user }) => {
                     gutterBottom
                     variant="h5"
                 >
-                    Total Loan Given: {user.first_name + " " + user.last_name}
+                    Total Loan Given: {user.total_loan_given} INR
                 </Typography>
                 <Typography
                     color="textPrimary"
                     gutterBottom
                     variant="h5"
                 >
-                    Total Loan Taken: {user.first_name + " " + user.last_name}
+                    Total Loan Taken: {user.total_loan_taken} INR
                 </Typography>
                 <Button
                     mt={1}

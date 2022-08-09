@@ -1,11 +1,9 @@
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import AddCardIcon from '@mui/icons-material/AddCard';
 import CreditScoreSharpIcon from '@mui/icons-material/CreditScoreSharp';
 import CurrencyRupeeSharpIcon from '@mui/icons-material/CurrencyRupeeSharp';
-import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoneyIcon from '@mui/icons-material/Money';
-import AddCardIcon from '@mui/icons-material/AddCard';
-import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
 import {
     AppBar,
     Box,
@@ -21,8 +19,8 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
-import { useState, useContext } from "react";
-import { NavLink } from 'react-router-dom';
+import { useContext, useState } from "react";
+import { NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const drawerWidth = 200;
@@ -59,11 +57,11 @@ const ResponsiveDrawer = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const { authTokens, logoutUser, loginUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
     const drawer = (
         <div>
             <Toolbar />
@@ -109,7 +107,7 @@ const ResponsiveDrawer = (props) => {
                         Customer to Customer (C2C)
                     </Typography>
                     {authTokens ? <Button color="inherit" onClick={logoutUser}>Logout</Button>
-                        : <Button color="inherit" onClick={loginUser}>Login</Button>}
+                        : <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>}
                 </Toolbar>
             </AppBar>
             <Box

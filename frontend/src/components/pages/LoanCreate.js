@@ -8,15 +8,21 @@ import {
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoanCreate = () => {
     let { authTokens } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isNaN(+e.target.amount.value) == true
             || isNaN(+e.target.tenure.value) == true
-            || isNaN(+e.target.interest.value) == true) {
+            || isNaN(+e.target.interest.value) == true
+            || e.target.amount.value <= 0
+            || e.target.interest.value < 0
+            || e.target.tenure.value <= 0
+            || e.target.amount.value % 1) {
             alert("Please enter valid value");
             return;
         }
@@ -33,9 +39,14 @@ const LoanCreate = () => {
         let data = await response
         if (data.status === 201) {
             alert("Loan Request Created");
-        } else {
-            alert('Something went wrong!');
+            window.location.reload();
         }
+        else if (data.status === 400) alert("Loan Limit exceeded!");
+        else {
+            alert('INTERNAL SERVER ERROR');
+            navigate("/login");
+        }
+
     }
 
     return (
@@ -71,6 +82,7 @@ const LoanCreate = () => {
                                 type="text"
                                 variant="outlined"
                                 required
+                                helperText="Amount should be a positive integer"
                             />
                             <TextField
                                 fullWidth
