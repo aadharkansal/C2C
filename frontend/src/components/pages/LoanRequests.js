@@ -19,7 +19,7 @@ const LoanRequests = () => {
         let data = await response.json()
 
         if (response.status === 200) setLoanRequests(data);
-        else alert("Something went wrong");
+        else alert("INTERNAL SERVER ERROR");
     }
 
     useEffect(() => {

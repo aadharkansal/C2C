@@ -19,7 +19,10 @@ const LoanTaken = () => {
         let data = await response.json()
 
         if (response.status === 200) setLoanRequests(data);
-        else logoutUser()
+        else {
+            alert("AUTHENTICATION ERROR, Please login again");
+            logoutUser();
+        }
     }
 
     useEffect(() => {
