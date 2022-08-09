@@ -1,17 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import './App.css';
+import Layout from './components/layout/Layout';
+import Account from "./components/pages/Account";
+import LoanCreate from "./components/pages/LoanCreate";
+import LoansGiven from "./components/pages/LoanGiven";
+import LoanRequests from "./components/pages/LoanRequests";
+import LoansTaken from "./components/pages/LoanTaken";
 import Login from './components/pages/Login';
 import NotFound from './components/pages/NotFound';
 import Register from './components/pages/Register';
-import Layout from './components/layout/Layout';
-import LoanRequests from "./components/pages/LoanRequests";
-import LoansGiven from "./components/pages/LoanGiven";
-import LoansTaken from "./components/pages/LoanTaken";
-import Account from "./components/pages/Account";
-import PrivateRoutes from "./utility/PrivateRoutes";
-import LoanCreate from "./components/pages/LoanCreate";
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext';
 import LoggedOutRoutes from './utility/LoggedOutRoutes';
+import PrivateRoutes from "./utility/PrivateRoutes";
 
 function App() {
   return (

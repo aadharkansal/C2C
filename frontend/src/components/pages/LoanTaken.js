@@ -1,8 +1,8 @@
 import { Box, Container, Typography } from '@mui/material';
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
-import LoanTakenResult from '../loan/LoanTakenResult';
 import AuthContext from '../../context/AuthContext';
+import LoanTakenResult from '../loan/LoanTakenResult';
 
 const LoanTaken = () => {
     const [loanRequests, setLoanRequests] = useState([]);
