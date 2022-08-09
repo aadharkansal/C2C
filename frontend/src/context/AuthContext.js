@@ -50,10 +50,9 @@ export const AuthProvider = ({ children }) => {
         })
         let data = await response.json()
 
-        if (response.status === 200) {
-            setAuthTokens(data.token);
-            localStorage.setItem('authTokens', JSON.stringify(data));
-            navigate("/account");
+        if (response.status === 201) {
+            alert("User Registered, please sign in to continue...");
+            navigate("/login");
             window.location.reload();
         } else {
             alert('INTERNAL SERVER ERROR');

@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length = 255)
     is_active = models.BooleanField(default = False)
     is_staff = models.BooleanField(default = False)
-    salary = models.BigIntegerField(blank=False)
+    salary = models.BigIntegerField(blank=False, default=0)
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     objects = UserManager()

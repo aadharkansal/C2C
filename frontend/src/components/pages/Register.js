@@ -3,12 +3,13 @@ import {
     Button,
     Container, Paper, TextField, Typography
 } from '@mui/material';
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 
 const Register = () => {
-    let { logoutUser } = AuthContext;
+    let { registerUser } = useContext(AuthContext);
 
     return (
         <>
@@ -58,7 +59,7 @@ const Register = () => {
                             }}
                         >
                             <Container maxWidth="sm">
-                                <form onSubmit={logoutUser}>
+                                <form onSubmit={registerUser}>
                                     <TextField
                                         required
                                         fullWidth
@@ -110,7 +111,7 @@ const Register = () => {
                                         variant="contained"
                                         sx={{ mt: 3, ml: 1 }}
                                     >
-                                        Next
+                                        Register
                                     </Button>
                                 </form>
                             </Container>
