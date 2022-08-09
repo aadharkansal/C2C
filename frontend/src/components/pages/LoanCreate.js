@@ -34,9 +34,10 @@ const LoanCreate = () => {
         if (data.status === 201) {
             alert("Loan Request Created");
             window.location.reload();
-        } else {
-            alert('INTERNAL SERVER ERROR');
         }
+        else if (data.status === 400) alert("Loan Limit exceeded!");
+        else alert('INTERNAL SERVER ERROR');
+
     }
 
     return (
