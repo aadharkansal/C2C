@@ -1,4 +1,6 @@
 from django.contrib import auth
+from django.db.models import Q
+from loan.models import *
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 
@@ -44,7 +46,16 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         fields = ["salary"]
 
 class UserGetSerializer(serializers.ModelSerializer):
+    total_loan_given = serializers.SerializerMethodField()
+    total_loan_taken = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["id", "first_name", "last_name", "email", "username", "total_loan_given", "total_loan_taken", "salary"]
+
+    def get_total_loan_given(self, obj):
+        return obj.total_loan_given()
+    
+    def get_total_loan_taken(self, obj):
+        return obj.total_loan_taken()
+

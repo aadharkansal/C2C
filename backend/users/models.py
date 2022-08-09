@@ -57,14 +57,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return str(refresh.access_token)
 
     def total_loan_given(self):
-        loans = Loan.objects.filter(Q(is_approved=self.id)&Q(is_approved=True))
+        loans = Loan.objects.filter(Q(approved_by=self.id)&Q(is_approved=True))
         total_loan_amount = 0
         for loan in loans:
             total_loan_amount += loan.amount
         return total_loan_amount
     
     def total_loan_taken(self):
-        loans = Loan.objects.filter(Q(is_applied=self.id)&Q(is_approved=True))
+        loans = Loan.objects.filter(Q(applied_by=self.id)&Q(is_approved=True))
         total_loan_amount = 0
         for loan in loans:
             total_loan_amount += loan.amount

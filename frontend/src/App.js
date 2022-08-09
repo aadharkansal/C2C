@@ -12,6 +12,7 @@ import Register from './components/pages/Register';
 import { AuthProvider } from './context/AuthContext';
 import LoggedOutRoutes from './utility/LoggedOutRoutes';
 import PrivateRoutes from "./utility/PrivateRoutes";
+import ServerError from "./components/pages/ServerError";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/loans/create" element={<PrivateRoutes><LoanCreate /></PrivateRoutes>} />
             <Route path="/login" element={<LoggedOutRoutes><Login /></LoggedOutRoutes>} />
             <Route path="/register" element={<LoggedOutRoutes >< Register /></LoggedOutRoutes>} />
+            <Route path="/server_error" element={<ServerError />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </Layout>
