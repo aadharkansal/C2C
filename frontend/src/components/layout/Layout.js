@@ -20,7 +20,7 @@ import {
     Typography
 } from '@mui/material';
 import { useContext, useState } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const drawerWidth = 200;
@@ -57,11 +57,11 @@ const ResponsiveDrawer = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const { authTokens, logoutUser, loginUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
     const drawer = (
         <div>
             <Toolbar />
@@ -107,7 +107,7 @@ const ResponsiveDrawer = (props) => {
                         Customer to Customer (C2C)
                     </Typography>
                     {authTokens ? <Button color="inherit" onClick={logoutUser}>Logout</Button>
-                        : <Button color="inherit" onClick={loginUser}>Login</Button>}
+                        : <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>}
                 </Toolbar>
             </AppBar>
             <Box
