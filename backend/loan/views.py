@@ -44,7 +44,7 @@ class Loans(generics.ListCreateAPIView):
                     )
                     return Response(data=serializer.data, status=status.HTTP_201_CREATED)
                 return Response(data="Loan Limit exceeded", status=status.HTTP_400_BAD_REQUEST)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as e:
             print(e)

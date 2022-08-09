@@ -1,4 +1,3 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
@@ -6,23 +5,13 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
-    let { loginUser } = useContext(AuthContext)
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
+    let { loginUser } = useContext(AuthContext);
 
     return (
         <>

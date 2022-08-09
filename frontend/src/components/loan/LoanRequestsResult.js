@@ -30,6 +30,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const [bids, setBids] = useState([]);
     const [loanID, setLoanID] = useState("");
     const handleClose = () => setBids([]);
+    const handleCloseBid = () => setLoanID("");
     const [limit, setLimit] = useState(8);
     const [page, setPage] = useState(0);
     let { authTokens } = useContext(AuthContext)
@@ -209,7 +210,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                             </Button>
                                         </TableCell>
                                     }
-                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> View Bids </Button>
+                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> View My Bids </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -228,7 +229,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
             />
             <Modal
                 open={loanID}
-                onClose={handleClose}
+                onClose={handleCloseBid}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >

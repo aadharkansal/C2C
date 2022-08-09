@@ -1,11 +1,9 @@
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import AddCardIcon from '@mui/icons-material/AddCard';
 import CreditScoreSharpIcon from '@mui/icons-material/CreditScoreSharp';
 import CurrencyRupeeSharpIcon from '@mui/icons-material/CurrencyRupeeSharp';
-import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoneyIcon from '@mui/icons-material/Money';
-import AddCardIcon from '@mui/icons-material/AddCard';
-import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
 import {
     AppBar,
     Box,
@@ -21,7 +19,7 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
