@@ -8,9 +8,11 @@ import {
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoanCreate = () => {
     let { authTokens } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +38,10 @@ const LoanCreate = () => {
             window.location.reload();
         }
         else if (data.status === 400) alert("Loan Limit exceeded!");
-        else alert('INTERNAL SERVER ERROR');
+        else {
+            alert('INTERNAL SERVER ERROR');
+            navigate("/login");
+        }
 
     }
 

@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import AuthContext from '../../context/AuthContext';
 import LoanRequestsResult from '../loan/LoanRequestsResult';
+import { useNavigate } from 'react-router-dom';
 
 const LoanRequests = () => {
+    const navigate = useNavigate();
     const [loanRequests, setLoanRequests] = useState([]);
     let { authTokens } = useContext(AuthContext);
 
@@ -19,7 +21,10 @@ const LoanRequests = () => {
         let data = await response.json()
 
         if (response.status === 200) setLoanRequests(data);
-        else alert("INTERNAL SERVER ERROR");
+        else {
+            alert("INTERNAL SERVER ERROR");
+            navigate('/server_error')
+        }
     }
 
     useEffect(() => {

@@ -210,7 +210,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                             </Button>
                                         </TableCell>
                                     }
-                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> View My Bids </Button>
+                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> {bids.length ? "View My Bids" : "No Bids"} </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

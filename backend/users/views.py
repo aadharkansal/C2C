@@ -57,6 +57,7 @@ class UserList(generics.ListCreateAPIView):
         try:
             user = User.objects.get(id = request.query_params.get('id'))
             serializer = UserGetSerializer(user)
+            print(serializer.data)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
