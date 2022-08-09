@@ -28,8 +28,12 @@ const style = {
 
 const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     const [bids, setBids] = useState([]);
+    const [open, setOpen] = useState(false);
     const [loanID, setLoanID] = useState("");
-    const handleClose = () => setBids([]);
+    const handleClose = () => {
+        setOpen(false);
+        setBids([]);
+    }
     const handleCloseBid = () => setLoanID("");
     const [limit, setLimit] = useState(8);
     const [page, setPage] = useState(0);
@@ -74,6 +78,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
     }
 
     const getBids = async (loanID) => {
+        setOpen(true);
         let response = await fetch(`${process.env.REACT_APP_BASE_URL}/loans/bid/${String(loanID)}`, {
             method: 'GET',
             headers: {
@@ -82,7 +87,6 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
             },
         })
         let data = await response.json()
-
         if (response.status === 200) {
             setBids(data);
             console.log(data)
@@ -111,7 +115,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                 ))}
             </TableBody>
         </Table>
-    </TableContainer> : <p>No BIDS</p>
+    </TableContainer> : <p>No BIDS. Create a bid to view your bids.</p>
 
     const bidding_form = <form onSubmit={handleSubmit}>
         <Box sx={{ my: 3 }}>
@@ -210,7 +214,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                                             </Button>
                                         </TableCell>
                                     }
-                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}> {bids.length ? "View My Bids" : "No Bids"} </Button>
+                                    <TableCell align="center"><Button variant="contained" onClick={() => { getBids(customer.id) }}>View My Bids</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -238,7 +242,7 @@ const LoanRequestsResult = ({ customers, want_give_loan_button }) => {
                 </Box>
             </Modal>
             <Modal
-                open={bids.length}
+                open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"

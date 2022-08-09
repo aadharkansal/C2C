@@ -18,7 +18,11 @@ const LoanCreate = () => {
         e.preventDefault();
         if (isNaN(+e.target.amount.value) == true
             || isNaN(+e.target.tenure.value) == true
-            || isNaN(+e.target.interest.value) == true) {
+            || isNaN(+e.target.interest.value) == true
+            || e.target.amount.value <= 0
+            || e.target.interest.value < 0
+            || e.target.tenure.value <= 0
+            || e.target.amount.value % 1) {
             alert("Please enter valid value");
             return;
         }
@@ -78,6 +82,7 @@ const LoanCreate = () => {
                                 type="text"
                                 variant="outlined"
                                 required
+                                helperText="Amount should be a positive integer"
                             />
                             <TextField
                                 fullWidth

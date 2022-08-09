@@ -66,13 +66,14 @@ class LoansBid(generics.ListCreateAPIView):
     def post(self, request, loan_id):
         try:
             user_bidded = User.objects.get(email=request.data.get('email'))
+            loan = Loan.objects.get(id=loan_id)
+            loan.bids.all().filter(offered_by=user_bidded.id).delete()
             loan_request = LoanBid.objects.create(
                 offered_interest = request.data.get('offered_interest'),
                 tenure = int(request.data.get('tenure')),
                 offered_by = user_bidded
             )
             try:
-                loan = Loan.objects.get(id=loan_id)
                 loan.bids.add(loan_request)
                 loan_request.amount_to_pay = loan_request.amount_to_be_paid(loan.amount)
                 loan_request.save()
@@ -81,7 +82,7 @@ class LoansBid(generics.ListCreateAPIView):
                     "name": user_name,
                     "amount": loan.amount
                 }
-                send_email("tanmayraj292000@gmail.com", user_name, 'bid_notification', mail_content)
+                send_email(loan.applied_by.first_name, user_name, 'bid_notification', mail_content)
                 user_bidded_name = f"{loan_request.offered_by.first_name} {loan_request.offered_by.last_name}"
                 mail_content = {
                     "name": user_bidded_name,
@@ -90,7 +91,7 @@ class LoansBid(generics.ListCreateAPIView):
                     "tenure": loan_request.tenure,
                     "interest": loan_request.offered_interest
                 }
-                send_email("tanmayraj29.99@gmail.com",  user_bidded_name, 'confirm_bid', mail_content)
+                send_email(user_bidded.email,  user_bidded_name, 'confirm_bid', mail_content)
             except Exception as e:
                 print(e)
                 loan_request.delete()
@@ -129,7 +130,7 @@ class LoansBidConfirm(generics.ListCreateAPIView):
                     "interest": loan_request.offered_interest,
                     "link": "www.google.com"
                 }
-                send_email("tanmayraj29.99@gmail.com",  user_bidded_name, 'confirm_pay', mail_content)
+                send_email(loan_request.offered_by.email,  user_bidded_name, 'confirm_pay', mail_content)
             else:
                 return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
             return Response(status=status.HTTP_201_CREATED)
